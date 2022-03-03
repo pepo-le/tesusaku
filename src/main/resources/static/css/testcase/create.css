@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.testcase-form {
+	font-size: 1rem;	
+}
+
+.testcase-form__header {
+	text-align: center;
+}
+
+.testcase-form__header__pre {
+	background-color: #cfc;
+}
+
+.testcase-form__header__after {
+	background-color: #ff9;
+}
+
+.testcase-form textarea {
+	height: 6.4rem;
+	width: 10rem;
+}
+
+.testcase-form__id {
+	height: 6.4rem;
+	width: 2.4rem;
+}
+
+.testcase-form__result {
+	height: 6.4rem;
+	width: 4.8rem;
+}
+
+.testcase-form__input-text {
+	height: 6.4rem;
+	width: 10rem;
+}
+
+.testcase-form__delete {
+	display: inline-block;
+	width: 2.4rem;
+	text-align: center;
+	background-color: #fcc;
+}
+
+.testcase-form__header {
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+}
+
+.testcase-form textarea {
+	font-size: 0.7rem;	
+}
+
+.testcase-form__result {
+	font-size: 1.2rem;
+}
+
+.add-btn {
+	display: block;
+	width: 5.6rem;
+	margin: 0.8rem 0;
+	font-size: 1.2rem;
+	cursor: pointer;
+}
+
+.delete-btn {
+	font-size: 1.4rem;
+	text-align: center;
+	cursor: pointer;
+}
+
+.e-delete-btn {
+	font-size: 1.4rem;
+	text-align: center;
+	cursor: pointer;
+}

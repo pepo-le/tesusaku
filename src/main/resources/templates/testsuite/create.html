@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-user}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>テストスイート作成フォーム</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<ul class="breadcrumb">
+			<li class="breadcrumb-item"><a th:href="@{/user}">ユーザーページ</a></li>	
+			<li class="breadcrumb-item active">テストスイート作成フォーム</li>
+		</ul>
+		<h2>テストスイート作成フォーム</h2>
+		<form class="mt-4" method="post" th:action="@{/testsuite/create}" th:object="${testsuiteForm}">
+			<div class="form-group">
+				<label for="suiteName">テストスイート名</label>
+				<input type="text" th:field="*{suiteName}" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="送信" class="btn btn-primary" />
+			</div>
+		</form>
+
+	</div>
+</body>
+</html>

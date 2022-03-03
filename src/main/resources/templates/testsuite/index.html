@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-form}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/testcase/create.css}" />
+<title>テストケース作成フォーム</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<ul class="breadcrumb">
+			<li class="breadcrumb-item"><a th:href="@{/user}">ユーザーページ</a></li>	
+			<li class="breadcrumb-item active">テストケース作成フォーム</li>
+		</ul>
+		<h2>テストケース作成フォーム</h2>
+		<form method="post" th:action="@{/testsuite/} + ${path}" class="testcase-form">
+			<table>
+				<thead>
+					<tr class="testcase-form__header">
+						<th class="testcase-form__delete">削除</th>
+						<th class="testcase-form__header__pre">No.</th>
+						<th class="testcase-form__header__pre">項目</th>
+						<th class="testcase-form__header__pre">前提条件</th>
+						<th class="testcase-form__header__pre">手順</th>
+						<th class="testcase-form__header__pre">期待結果</th>
+						<th class="testcase-form__header__after">結果</th>
+						<th class="testcase-form__header__after">確認日</th>
+						<th class="testcase-form__header__after">確認Ver.</th>
+						<th class="testcase-form__header__after">不具合No.</th>
+						<th class="testcase-form__header__after">実行者</th>
+						<th class="testcase-form__header__after">コメント</th>
+					</tr>
+				</thead>
+				<tbody th:if="${cases.size() == 0}" id="testcase-form-body">
+					<tr th:object="${testcaseForm}">
+						<td></td>
+						<td><input class="testcase-form__id" type="text" th:field="*{caseId}" /></td>
+						<td><textarea th:field="*{caseName}"></textarea></td>
+						<td><textarea th:field="*{condition}"></textarea></td>
+						<td><textarea th:field="*{process}"></textarea></td>
+						<td><textarea th:field="*{expect}"></textarea></td>
+						<td>
+							<select class="testcase-form__result" th:field="*{result}">
+								<option th:each="result:${T(com.pepole.tesusaku.util.Type).RESULT}" th:value="${result.key}" th:text="${result.value}"></option>
+							</select>
+						</td>
+						<td><input class="testcase-form__input-text" type="date" th:field="*{checkDate}" /></td>
+						<td><input class="testcase-form__input-text" type="text" th:field="*{checkVer}" /></td>
+						<td><input class="testcase-form__input-text" type="text" th:field="*{defectNo}" /></td>
+						<td><input class="testcase-form__input-text" type="text" th:field="*{tester}" /></td>
+						<td><textarea th:field="*{comment}"></textarea></td>
+					</tr>
+				</tbody>
+				
+				<tbody th:if="${cases.size() != 0}" id="testcase-form-body">
+					<tr th:each="testcase : ${cases}">
+						<td th:if="${cases.size() == 1}"></td>
+						<td th:if="${cases.size() > 1}" th:text="x" class="e-delete-btn"></td>
+						<td><input class="testcase-form__id" type="text" name="caseId" th:value="${testcase.caseId}" /></td>
+						<td><textarea name="caseName" th:text="${testcase.caseName}"></textarea></td>
+						<td><textarea name="condition" th:text="${testcase.condition}"></textarea></td>
+						<td><textarea name="process" th:text="${testcase.process}"></textarea></td>
+						<td><textarea name="expect" th:text="${testcase.expect}"></textarea></td>
+						<td>
+							<select class="testcase-form__result" name="result">
+								<option th:each="result:${T(com.pepole.tesusaku.util.Type).RESULT}" th:value="${result.key}"
+									th:text="${result.value}" th:selected="${result.key} == ${testcase.result}"></option>
+							</select>
+						</td>
+						<td th:if="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
+						<td th:unless="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate}" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
+						<td><textarea name="comment" th:text="${testcase.comment}"></textarea></td>
+					</tr>
+				</tbody>
+			</table>
+			<span id="add-btn" class="add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> 追加</span>
+			<div>
+				<input type="submit" value="送信" />
+			</div>
+		</form>
+
+	<script th:src="@{/js/form.js}"></script>
+	</div>
+</body>
+</html>

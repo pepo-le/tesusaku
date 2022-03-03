@@ -1,0 +1,78 @@
+package com.pepole.tesusaku.controller;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.pepole.tesusaku.domain.user.model.MUser;
+import com.pepole.tesusaku.domain.user.model.Testsuite;
+import com.pepole.tesusaku.domain.user.service.TestsuiteService;
+import com.pepole.tesusaku.domain.user.service.UserService;
+import com.pepole.tesusaku.form.UserListForm;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Controller
+public class UserController {
+
+    private final UserService userService;
+    
+    private final TestsuiteService testsuiteService;
+
+    private final ModelMapper modelMapper;
+
+    /** ユーザー詳細画面を表示 */
+    @GetMapping("/user")
+    public String index(Model model) {
+    	
+    	List<Testsuite> suites = testsuiteService.getSuites();
+    	
+        // Modelに登録
+        model.addAttribute("testsuites", suites);
+
+        // ユーザー詳細画面を表示
+        return "user/index";
+    }
+
+    /** ユーザー一覧画面を表示 */
+    @GetMapping("/user/list")
+    public String getUserList(@ModelAttribute UserListForm form, Model model) {
+
+        // formをMUserクラスに変換
+        MUser user = modelMapper.map(form, MUser.class);
+
+        // ユーザー一覧取得
+        List<MUser> userList = userService.getUsers(user);
+
+        // Modelに登録
+        model.addAttribute("userList", userList);
+
+        // ユーザー一覧画面を表示
+        return "user/list";
+    }
+
+    /** ユーザー検索処理 */
+    @PostMapping("/user/list")
+    public String postUserList(@ModelAttribute UserListForm form, Model model) {
+
+        // formをMUserクラスに変換
+        MUser user = modelMapper.map(form, MUser.class);
+
+        // ユーザー検索
+        List<MUser> userList = userService.getUsers(user);
+
+        // Modelに登録
+        model.addAttribute("userList", userList);
+
+        // ユーザー一覧画面を表示
+        return "user/list";
+    }
+
+    
+}

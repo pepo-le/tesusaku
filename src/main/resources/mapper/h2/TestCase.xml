@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepole.tesusaku.repository.TestcaseMapper">
+	<!-- マッピング定義(テストケース) -->
+	<resultMap type="com.pepole.tesusaku.domain.user.model.Testcase" id="testcase">
+		<id column="case_id" property="caseId" />
+		<result column="case_name" property="caseName" />
+		<result column="condition" property="condition" />
+		<result column="process" property="process" />
+		<result column="expect" property="expect" />
+		<result column="result" property="result" />
+		<result column="check_date" property="check_date" />
+		<result column="check_ver" property="check_ver" />
+		<result column="defect_no" property="defect_no" />
+		<result column="tester" property="tester" />
+		<result column="comment" property="comment" />
+		<result column="testsuite_id" property="testsuite_id" />
+	</resultMap>
+
+	<!-- テストケース1件登録 -->
+	<insert id="insertOne">
+		merge into t_testcase(
+		case_id ,
+		case_name ,
+		condition ,
+		process ,
+		expect ,
+		result ,
+		check_date ,
+		check_ver ,
+		defect_no ,
+		tester ,
+		comment ,
+		testsuite_id
+		)
+		values (
+		#{caseId} ,
+		#{caseName} ,
+		#{condition} ,
+		#{process} ,
+		#{expect} ,
+		#{result} ,
+		#{checkDate} ,
+		#{checkVer} ,
+		#{defectNo} ,
+		#{tester} ,
+		#{comment} ,
+		#{testsuiteId}
+		)
+	</insert>
+
+	<!-- テストケース複数件登録 -->
+	<insert id="insertBulk">
+		merge into t_testcase(
+		  case_id ,
+		  case_name ,
+		  condition ,
+		  process ,
+		  expect ,
+		  result ,
+		  check_date ,
+		  check_ver ,
+		  defect_no ,
+		  tester ,
+		  comment ,
+		  testsuite_id
+		)
+		values
+		<foreach collection="testcaseList" item="te" separator=",">
+		(
+		  #{te.caseId} ,
+		  #{te.caseName} ,
+		  #{te.condition} ,
+		  #{te.process} ,
+		  #{te.expect} ,
+		  #{te.result} ,
+		  #{te.checkDate} ,
+		  #{te.checkVer} ,
+		  #{te.defectNo} ,
+		  #{te.tester} ,
+		  #{te.comment} ,
+		  #{te.testsuiteId}
+		)
+		</foreach>
+	</insert>
+
+	<!-- テストケース複数件取得 -->
+	<select id="selectBySuiteId" resultType="testcase">
+		select * from t_testcase
+		where testsuite_id = #{testsuiteId}
+	</select>
+
+</mapper>
