@@ -13,7 +13,7 @@
 			<li class="breadcrumb-item active">テストスイート作成フォーム</li>
 		</ul>
 		<h2>テストスイート作成フォーム</h2>
-		<form class="mt-4" method="post" th:action="@{/testsuite/create}" th:object="${testsuiteForm}">
+		<form class="mt-4" method="post" th:action="@{/testsuite}" th:object="${testsuiteForm}">
 			<div class="form-group">
 				<label for="suiteName">テストスイート名</label>
 				<input type="text" th:field="*{suiteName}" />

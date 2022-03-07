@@ -14,6 +14,7 @@ public class Type {
 		role.put(1, "tester");
 		ROLE = Collections.unmodifiableMap(role);
 
+		// テスト実行結果
 		Map<Integer, String> result = new LinkedHashMap<Integer, String>();
 		result.put(0, "");
 		result.put(1, "OK");

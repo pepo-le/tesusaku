@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.pepole.tesusaku.domain.user.model.Testcase;
+import com.pepole.tesusaku.model.Testcase;
 
 @Mapper
 public interface TestcaseMapper {

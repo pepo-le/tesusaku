@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.pepole.tesusaku.domain.user.model.MUser;
+import com.pepole.tesusaku.model.MUser;
 
 @Mapper
 public interface UserMapper {

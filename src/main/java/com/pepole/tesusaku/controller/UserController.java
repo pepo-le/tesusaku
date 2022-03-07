@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.pepole.tesusaku.domain.user.model.MUser;
-import com.pepole.tesusaku.domain.user.model.Testsuite;
-import com.pepole.tesusaku.domain.user.service.TestsuiteService;
-import com.pepole.tesusaku.domain.user.service.UserService;
 import com.pepole.tesusaku.form.UserListForm;
+import com.pepole.tesusaku.model.MUser;
+import com.pepole.tesusaku.model.Testsuite;
+import com.pepole.tesusaku.service.TestsuiteService;
+import com.pepole.tesusaku.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 

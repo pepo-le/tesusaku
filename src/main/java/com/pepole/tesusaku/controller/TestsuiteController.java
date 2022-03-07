@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.pepole.tesusaku.domain.user.model.Testcase;
-import com.pepole.tesusaku.domain.user.model.Testsuite;
-import com.pepole.tesusaku.domain.user.service.TestcaseService;
-import com.pepole.tesusaku.domain.user.service.TestsuiteService;
 import com.pepole.tesusaku.form.TestcaseForm;
 import com.pepole.tesusaku.form.TestsuiteForm;
+import com.pepole.tesusaku.model.Testcase;
+import com.pepole.tesusaku.model.Testsuite;
+import com.pepole.tesusaku.service.TestcaseService;
+import com.pepole.tesusaku.service.TestsuiteService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,11 +31,11 @@ public class TestsuiteController {
 	private final ModelMapper modelMapper;
 	
 	@GetMapping("/testsuite/create")
-	public String getForm(Model model, @ModelAttribute TestsuiteForm testsuiteForm) {
+	public String getCreateForm(Model model, @ModelAttribute TestsuiteForm testsuiteForm) {
 		return "/testsuite/create";
 	}
 
-	@PostMapping("/testsuite/create")
+	@PostMapping("/testsuite")
 	public String createSuite(Model model, @Validated @ModelAttribute TestsuiteForm testsuiteForm) {
         Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
 
@@ -43,8 +43,8 @@ public class TestsuiteController {
 		
 		return "redirect:/user";
 	}
-
-	@GetMapping("/testsuite/list")
+	
+	@GetMapping("/testsuite")
 	public String getSuiteList(Model model, @ModelAttribute TestsuiteForm testsuiteForm) {
     	
     	List<Testsuite> suites = testsuiteService.getSuites();
@@ -64,11 +64,11 @@ public class TestsuiteController {
         List<Testcase> cases = testcaseService.selectBySuiteId(path);
         model.addAttribute("cases", cases);
 		
-		return "/testsuite/index";
+		return "/testsuite/caseform";
 	}
 	
 	@PostMapping("/testsuite/{path}")
-	public String createCase(@PathVariable String path, Model model, @ModelAttribute TestcaseForm testcaseForm) {
+	public String createSuite(@PathVariable String path, Model model, @ModelAttribute TestcaseForm testcaseForm) {
 		
 		if (testcaseForm.getCaseId().length == 1) {
 			testcaseService.create(testcaseForm, path);

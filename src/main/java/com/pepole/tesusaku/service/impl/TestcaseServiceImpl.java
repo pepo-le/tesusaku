@@ -1,25 +1,25 @@
-package com.pepole.tesusaku.domain.user.service.impl;
+package com.pepole.tesusaku.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pepole.tesusaku.domain.user.model.Testcase;
-import com.pepole.tesusaku.domain.user.service.TestcaseService;
 import com.pepole.tesusaku.form.TestcaseForm;
+import com.pepole.tesusaku.model.Testcase;
 import com.pepole.tesusaku.repository.TestcaseMapper;
+import com.pepole.tesusaku.service.TestcaseService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class TestcaseServiceImpl implements TestcaseService {
 	
-	@Autowired
-	private TestcaseMapper mapper;
+	private final TestcaseMapper mapper;
 
-    /** テストケース作成 */
+    /** テストケース1件作成 */
     @Override
-//    public void create(Testcase testcase) {
     public void create(TestcaseForm testcaseForm, String path) {
 		Testcase testcase = new Testcase();
     	
@@ -40,7 +40,7 @@ public class TestcaseServiceImpl implements TestcaseService {
         mapper.insertOne(testcase);
     }
 
-    /** テストケース作成 */
+    /** テストケース複数件作成 */
     @Override
     public void createBulk(TestcaseForm testcaseForm, String path) {
     	

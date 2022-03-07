@@ -1,8 +1,8 @@
-package com.pepole.tesusaku.domain.user.service;
+package com.pepole.tesusaku.service;
 
 import java.util.List;
 
-import com.pepole.tesusaku.domain.user.model.Testsuite;
+import com.pepole.tesusaku.model.Testsuite;
 
 public interface TestsuiteService {
 

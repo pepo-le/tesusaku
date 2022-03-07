@@ -1,4 +1,4 @@
-package com.pepole.tesusaku.domain.user.service.impl;
+package com.pepole.tesusaku.service.impl;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pepole.tesusaku.domain.user.model.MUser;
-import com.pepole.tesusaku.domain.user.service.UserService;
+import com.pepole.tesusaku.model.MUser;
 import com.pepole.tesusaku.repository.UserMapper;
+import com.pepole.tesusaku.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
     /** ユーザー削除(1件) */
     @Override
     public void deleteUserOne(String userId) {
-        int count = mapper.deleteOne(userId);
+        mapper.deleteOne(userId);
     }
 
     /** ログインユーザー情報取得 */

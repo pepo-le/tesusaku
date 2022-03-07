@@ -1,13 +1,12 @@
-package com.pepole.tesusaku.domain.user.service;
+package com.pepole.tesusaku.service;
 
 import java.util.List;
 
-import com.pepole.tesusaku.domain.user.model.Testcase;
 import com.pepole.tesusaku.form.TestcaseForm;
+import com.pepole.tesusaku.model.Testcase;
 
 public interface TestcaseService {
     /** テストケース登録 */
-//    public void create(Testcase testcase);
     public void create(TestcaseForm testcaseForm, String path);
 
     /** テストケース複数件登録 */

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pepole.tesusaku.domain.user.model.MUser;
-import com.pepole.tesusaku.domain.user.service.UserService;
 import com.pepole.tesusaku.form.UserDetailForm;
+import com.pepole.tesusaku.model.MUser;
+import com.pepole.tesusaku.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

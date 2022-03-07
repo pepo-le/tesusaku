@@ -1,12 +1,12 @@
-package com.pepole.tesusaku.domain.user.service.impl;
+package com.pepole.tesusaku.service.impl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.pepole.tesusaku.domain.user.model.Testsuite;
-import com.pepole.tesusaku.domain.user.service.TestsuiteService;
+import com.pepole.tesusaku.model.Testsuite;
 import com.pepole.tesusaku.repository.TestsuiteMapper;
+import com.pepole.tesusaku.service.TestsuiteService;
 
 import lombok.RequiredArgsConstructor;
 

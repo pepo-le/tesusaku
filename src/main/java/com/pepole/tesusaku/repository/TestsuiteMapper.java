@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.pepole.tesusaku.domain.user.model.Testsuite;
+import com.pepole.tesusaku.model.Testsuite;
 
 @Mapper
 public interface TestsuiteMapper {

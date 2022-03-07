@@ -1,4 +1,4 @@
-package com.pepole.tesusaku.domain.user.model;
+package com.pepole.tesusaku.model;
 
 import lombok.Data;
 
