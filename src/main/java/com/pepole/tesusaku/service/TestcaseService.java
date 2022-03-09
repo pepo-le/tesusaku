@@ -12,6 +12,12 @@ public interface TestcaseService {
     /** テストケース複数件登録 */
     public void createBulk(TestcaseForm testcaseForm, String path);
 
+    /** テストケース複数件更新 */
+    public void editBulk(TestcaseForm testcaseForm, String path);
+
     /** テストケース複数件取得 */
     public List<Testcase> selectBySuiteId(String path);
+
+    /** テストケース複数件取得 */
+    public List<Testcase> selectIdBySuiteId(String path);
 }

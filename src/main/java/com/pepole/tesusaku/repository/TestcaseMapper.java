@@ -18,4 +18,10 @@ public interface TestcaseMapper {
 
 	// 複数取得
 	public List<Testcase> selectBySuiteId(String path);
+
+	// 複数件ID取得
+	public List<Testcase> selectIdBySuiteId(String path);
+
+	// 複数件削除
+	public int deleteAll(@Param("deleteList")List<Testcase> deleteList);
 }

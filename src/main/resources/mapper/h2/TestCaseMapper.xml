@@ -94,4 +94,25 @@
 			testsuite_id = #{testsuiteId}
 	</select>
 
+	<!-- テストケース複数件ID取得 -->
+	<select id="selectIdBySuiteId" resultType="testcase">
+		select
+			case_id
+		from
+			t_testcase
+		where
+			testsuite_id = #{testsuiteId}
+	</select>
+
+	<!-- テストケース複数件削除 -->
+	<delete id="deleteAll">
+		delete from
+			t_testcase
+		where
+			case_id in(
+				<foreach collection="deleteList" item="te" separator=",">
+				#{te.caseId}
+				</foreach>
+			)
+	</delete>
 </mapper>

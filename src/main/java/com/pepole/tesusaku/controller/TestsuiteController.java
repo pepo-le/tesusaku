@@ -73,7 +73,7 @@ public class TestsuiteController {
 		if (testcaseForm.getCaseId().length == 1) {
 			testcaseService.create(testcaseForm, path);
 		} else {
-			testcaseService.createBulk(testcaseForm, path);
+			testcaseService.editBulk(testcaseForm, path);
 		}
 
 		return "redirect:/user";

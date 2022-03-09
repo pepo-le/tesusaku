@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pepole.tesusaku.form.TestcaseForm;
 import com.pepole.tesusaku.model.Testcase;
@@ -43,9 +44,52 @@ public class TestcaseServiceImpl implements TestcaseService {
     /** テストケース複数件作成 */
     @Override
     public void createBulk(TestcaseForm testcaseForm, String path) {
-    	
 		List<Testcase> testcaseList = new ArrayList<>();
 		
+		for (int i = 0; i < testcaseForm.getCaseId().length; i++) {
+			Testcase testcase = new Testcase();
+
+			testcase.setCaseId(testcaseForm.getCaseId()[i]);
+			testcase.setCaseName(testcaseForm.getCaseName()[i]);
+			testcase.setCondition(testcaseForm.getCondition()[i]);
+			testcase.setProcess(testcaseForm.getProcess()[i]);
+			testcase.setExpect(testcaseForm.getExpect()[i]);
+			testcase.setResult(testcaseForm.getResult()[i]);
+			if (testcaseForm.getCheckDate()[i] == "") {
+				testcase.setCheckDate("9999-12-31");
+			} else {
+				testcase.setCheckDate(testcaseForm.getCheckDate()[i]);
+			}
+			testcase.setCheckVer(testcaseForm.getCheckVer()[i]);
+			testcase.setDefectNo(testcaseForm.getDefectNo()[i]);
+			testcase.setTester(testcaseForm.getTester()[i]);
+			testcase.setComment(testcaseForm.getComment()[i]);
+			testcase.setTestsuiteId(path);
+
+			testcaseList.add(testcase);
+		}
+
+        mapper.insertBulk(testcaseList);
+    }
+
+    /** テストケース複数件編集 */
+    @Transactional
+    @Override
+    public void editBulk(TestcaseForm testcaseForm, String path) {
+
+    	/**
+    	 * フォームデータの形式
+    	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
+    	 */
+    	
+    	// フォーム上にないテストケースを削除
+    	List<Testcase> existingList = mapper.selectIdBySuiteId(path);
+    	List<Testcase> deleteList = new ArrayList<Testcase>();
+    	existingList.forEach(c -> { deleteList.add(c); });
+    	if (deleteList.size() > 0) mapper.deleteAll(deleteList);
+    
+    	// 登録（更新）
+		List<Testcase> testcaseList = new ArrayList<>();
 		for (int i = 0; i < testcaseForm.getCaseId().length; i++) {
 			Testcase testcase = new Testcase();
 
@@ -75,8 +119,13 @@ public class TestcaseServiceImpl implements TestcaseService {
     /** テストケース取得 */
     @Override
     public List<Testcase> selectBySuiteId(String path) {
-    	
     	return mapper.selectBySuiteId(path);
+    }
+
+    /** テストケースID取得 */
+    @Override
+    public List<Testcase> selectIdBySuiteId(String path) {
+    	return mapper.selectIdBySuiteId(path);
     }
     
 }
