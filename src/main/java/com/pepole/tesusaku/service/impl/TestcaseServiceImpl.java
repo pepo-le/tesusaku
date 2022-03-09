@@ -84,8 +84,17 @@ public class TestcaseServiceImpl implements TestcaseService {
     	
     	// フォーム上にないテストケースを削除
     	List<Testcase> existingList = mapper.selectIdBySuiteId(path);
-    	List<Testcase> deleteList = new ArrayList<Testcase>();
-    	existingList.forEach(c -> { deleteList.add(c); });
+    	List<Testcase> deleteList = new ArrayList<>();
+    	List<String> formIdList = new ArrayList<>(); 
+
+    	for (var testcase : testcaseForm.getCaseId()) {
+    		formIdList.add(testcase);
+    	}
+    	
+    	existingList.forEach(c -> {
+    		if (! formIdList.contains(c.getCaseId())) deleteList.add(c);
+    	});
+
     	if (deleteList.size() > 0) mapper.deleteAll(deleteList);
     
     	// 登録（更新）
