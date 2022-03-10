@@ -19,12 +19,12 @@ public class UserServiceImpl implements UserService {
     private final UserMapper mapper;
 
     private final PasswordEncoder passwordEncoder;
-
+    
     /** ユーザー登録 */
     @Override
     public void signup(MUser user) {
     	// TODO
-        user.setRole("ROLE_ADMIN"); // ロール
+//        user.setRole("ROLE_ADMIN"); // ロール
 
         // パスワード暗号化
         String rawPassword = user.getPassword();

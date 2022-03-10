@@ -1,6 +1,7 @@
 package com.pepole.tesusaku.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import com.pepole.tesusaku.model.Testcase;
 import com.pepole.tesusaku.model.Testsuite;
 import com.pepole.tesusaku.service.TestcaseService;
 import com.pepole.tesusaku.service.TestsuiteService;
+import com.pepole.tesusaku.util.TestcaseComponent;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +29,8 @@ public class TestsuiteController {
 	private final TestsuiteService testsuiteService;
 	
 	private final TestcaseService testcaseService;
+	
+	private final TestcaseComponent testcaseComponent;
 	
 	private final ModelMapper modelMapper;
 	
@@ -57,9 +61,10 @@ public class TestsuiteController {
 
 	@GetMapping("/testsuite/{path}")
 	public String getSuite(@PathVariable String path, Model model, @ModelAttribute TestcaseForm testcaseForm) {
-
-        // Modelに登録
         model.addAttribute("path", path);
+
+		Map<Integer, String> resultMap = testcaseComponent.getResultMap();
+		model.addAttribute("resultMap", resultMap);
         
         List<Testcase> cases = testcaseService.selectBySuiteId(path);
         model.addAttribute("cases", cases);

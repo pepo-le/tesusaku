@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pepole.tesusaku.application.service.UserApplicationService;
 import com.pepole.tesusaku.form.GroupOrder;
 import com.pepole.tesusaku.form.SignupForm;
 import com.pepole.tesusaku.model.MUser;
 import com.pepole.tesusaku.service.UserService;
+import com.pepole.tesusaku.util.UserComponent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SignupController {
 
-    private final UserApplicationService userApplicationService;
+    private final UserComponent userComponent;
 
     private final UserService userService;
 
@@ -41,7 +41,7 @@ public class SignupController {
     @GetMapping("/signup")
     public String getSignup(Model model, Locale locale, @ModelAttribute SignupForm form) {
 
-        Map<String, Integer> roleMap = userApplicationService.getRoleMap(locale);
+        Map<String, String> roleMap = userComponent.getRoleMap(locale);
         model.addAttribute("roleMap", roleMap);
 
         // ユーザー登録画面に遷移

@@ -24,5 +24,5 @@ public class SignupForm {
     private String userName;
 
     @NotNull(groups = ValidGroup1.class)
-    private Integer role;
+    private String role;
 }
