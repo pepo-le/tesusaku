@@ -23,10 +23,11 @@ public class TestsuiteServiceImpl implements TestsuiteService {
     /** テストスイート作成 */
 	@Transactional
     @Override
-    public void create(Testsuite suite) {
+    public void create(Testsuite suite, List<String> assignUsers) {
         testsuiteMapperr.insertOne(suite);
 
-        assignMapper.insertOne(suite.getSuiteId(), suite.getAdminId());
+        assignUsers.add(suite.getAdminId());
+        assignMapper.insertBulk(suite.getSuiteId(), assignUsers);
     }
     
     /** テストスイート一覧取得 */

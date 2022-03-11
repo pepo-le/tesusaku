@@ -23,14 +23,23 @@ public class UserServiceImpl implements UserService {
     /** ユーザー登録 */
     @Override
     public void signup(MUser user) {
-    	// TODO
-//        user.setRole("ROLE_ADMIN"); // ロール
-
         // パスワード暗号化
         String rawPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(rawPassword));
 
         mapper.insertOne(user);
+    }
+
+    /** 他ユーザー全件取得 */
+    @Override
+    public List<MUser> getOthers(String userId) {
+        return mapper.findByUserNot(userId);
+    }
+
+    /** ユーザー全件取得 */
+    @Override
+    public List<MUser> getAllUsers() {
+        return mapper.findAll();
     }
 
     /** ユーザー取得 */

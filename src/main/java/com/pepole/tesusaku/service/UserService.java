@@ -9,6 +9,12 @@ public interface UserService {
     /** ユーザー登録 */
     public void signup(MUser user);
 
+    /** ユーザー全件取得 */
+    public List<MUser> getAllUsers();
+
+    /** 他ユーザー全件取得 */
+    public List<MUser> getOthers(String userId);
+
     /** ユーザー取得 */
     public List<MUser> getUsers(MUser user);
 

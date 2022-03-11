@@ -13,6 +13,11 @@
 		<result column="role" property="role" />
 	</resultMap>
 
+	<!-- マッピング定義(ユーザー) -->
+	<resultMap type="com.pepole.tesusaku.model.MUser" id="userId">
+		<id column="user_id" property="userId" />
+	</resultMap>
+
 	<!-- ユーザー1件登録 -->
 	<insert id="insertOne">
 		insert into m_user(
@@ -28,6 +33,24 @@
 			, #{role}
 		)
 	</insert>
+
+	<!-- ユーザー全件取得 -->
+	<select id="findAll" resultType="MUser">
+		select
+			user_id
+		from
+			m_user
+	</select>
+
+	<!-- 指定ユーザー外全件取得 -->
+	<select id="findByUserNot" resultType="MUser">
+		select
+			user_id
+		from
+			m_user
+		where
+			user_id <![CDATA[ <> ]]> #{userId}
+	</select>
 
 	<!-- ユーザー複数件取得 -->
 	<select id="findMany" resultType="MUser">

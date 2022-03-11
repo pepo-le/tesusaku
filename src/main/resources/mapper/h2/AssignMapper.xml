@@ -17,4 +17,18 @@
 			, #{userId}
 		)
 	</insert>
+
+	<insert id="insertBulk">
+		insert into	t_assign(
+			suite_id
+			, user_id
+		)
+		values 
+			<foreach collection="assignUsers" item="user" separator=",">
+			(
+				#{suiteId}
+				, #{user}
+			)
+			</foreach>
+	</insert>
 </mapper>

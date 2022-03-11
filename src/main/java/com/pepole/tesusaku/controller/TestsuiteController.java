@@ -1,5 +1,7 @@
 package com.pepole.tesusaku.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pepole.tesusaku.form.TestcaseForm;
 import com.pepole.tesusaku.form.TestsuiteForm;
+import com.pepole.tesusaku.model.MUser;
 import com.pepole.tesusaku.model.Testcase;
 import com.pepole.tesusaku.model.Testsuite;
 import com.pepole.tesusaku.service.TestcaseService;
 import com.pepole.tesusaku.service.TestsuiteService;
+import com.pepole.tesusaku.service.UserService;
 import com.pepole.tesusaku.util.TestcaseComponent;
 
 import lombok.RequiredArgsConstructor;
@@ -30,13 +34,20 @@ public class TestsuiteController {
 	private final TestsuiteService testsuiteService;
 	
 	private final TestcaseService testcaseService;
+
+	private final UserService userService;
 	
 	private final TestcaseComponent testcaseComponent;
 	
 	private final ModelMapper modelMapper;
 	
 	@GetMapping("/testsuite/create")
-	public String getCreateForm(Model model, @ModelAttribute TestsuiteForm testsuiteForm) {
+	public String getCreateForm(Model model, @ModelAttribute TestsuiteForm testsuiteForm,
+			Authentication loginUser) {
+		List<MUser> users = userService.getOthers(loginUser.getName());
+		
+		model.addAttribute("users", users);
+		
 		return "/testsuite/create";
 	}
 
@@ -46,8 +57,10 @@ public class TestsuiteController {
 
         Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
         suite.setAdminId(loginUser.getName());
-
-        testsuiteService.create(suite);
+        
+        List<String> assignUsers = new ArrayList<>(Arrays.asList(testsuiteForm.getAssign()));
+        
+        testsuiteService.create(suite, assignUsers);
 		
 		return "redirect:/user";
 	}

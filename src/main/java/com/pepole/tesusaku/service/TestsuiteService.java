@@ -7,7 +7,7 @@ import com.pepole.tesusaku.model.Testsuite;
 public interface TestsuiteService {
 
     /** テストスイート登録 */
-    public void create(Testsuite suite);
+    public void create(Testsuite suite, List<String> assignUsers);
     
     /** テストスイート一覧取得 */
     public List<Testsuite> getSuiteList(String userId);
