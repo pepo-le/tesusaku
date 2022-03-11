@@ -14,4 +14,13 @@ public interface TestsuiteMapper {
 
 	// 取得
 	public List<Testsuite> selectAll();
+
+	// 取得
+	public List<Testsuite> selectByUser(String userId);
+
+	// 取得
+	public List<Testsuite> findByUser(String userId);
+
+	// 取得
+	public List<Testsuite> selectByUserAndSuiteid(String userId);
 }

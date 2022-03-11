@@ -22,6 +22,11 @@ public class TestcaseServiceImpl implements TestcaseService {
     /** テストケース1件作成 */
     @Override
     public void create(TestcaseForm testcaseForm, String path) {
+    	/**
+    	 * フォームデータの形式
+    	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
+    	 */
+
 		Testcase testcase = new Testcase();
     	
 		testcase.setCaseId(testcaseForm.getCaseId()[0]);
@@ -35,8 +40,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 		testcase.setDefectNo(testcaseForm.getDefectNo().length == 1 ? testcaseForm.getDefectNo()[0] : "");
 		testcase.setTester(testcaseForm.getTester().length == 1 ? testcaseForm.getTester()[0] : "");
 		testcase.setComment(testcaseForm.getComment().length == 1 ? testcaseForm.getComment()[0] : "");
-		testcase.setTestsuiteId(path);
-
+		testcase.setSuiteId(path);
 
         mapper.insertOne(testcase);
     }
@@ -44,6 +48,11 @@ public class TestcaseServiceImpl implements TestcaseService {
     /** テストケース複数件作成 */
     @Override
     public void createBulk(TestcaseForm testcaseForm, String path) {
+    	/**
+    	 * フォームデータの形式
+    	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
+    	 */
+
 		List<Testcase> testcaseList = new ArrayList<>();
 		
 		for (int i = 0; i < testcaseForm.getCaseId().length; i++) {
@@ -64,7 +73,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 			testcase.setDefectNo(testcaseForm.getDefectNo()[i]);
 			testcase.setTester(testcaseForm.getTester()[i]);
 			testcase.setComment(testcaseForm.getComment()[i]);
-			testcase.setTestsuiteId(path);
+			testcase.setSuiteId(path);
 
 			testcaseList.add(testcase);
 		}
@@ -76,7 +85,6 @@ public class TestcaseServiceImpl implements TestcaseService {
     @Transactional
     @Override
     public void editBulk(TestcaseForm testcaseForm, String path) {
-
     	/**
     	 * フォームデータの形式
     	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
@@ -95,7 +103,7 @@ public class TestcaseServiceImpl implements TestcaseService {
     		if (! formIdList.contains(c.getCaseId())) deleteList.add(c);
     	});
 
-    	if (deleteList.size() > 0) mapper.deleteAll(deleteList);
+    	if (deleteList.size() > 0) mapper.deleteById(deleteList);
     
     	// 登録（更新）
 		List<Testcase> testcaseList = new ArrayList<>();
@@ -117,7 +125,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 			testcase.setDefectNo(testcaseForm.getDefectNo()[i]);
 			testcase.setTester(testcaseForm.getTester()[i]);
 			testcase.setComment(testcaseForm.getComment()[i]);
-			testcase.setTestsuiteId(path);
+			testcase.setSuiteId(path);
 
 			testcaseList.add(testcase);
 		}

@@ -3,6 +3,7 @@
 <mapper namespace="com.pepole.tesusaku.repository.TestcaseMapper">
 	<!-- マッピング定義(テストケース) -->
 	<resultMap type="com.pepole.tesusaku.model.Testcase" id="testcase">
+		<id column="suite_id" property="suite_id" />
 		<id column="case_id" property="caseId" />
 		<result column="case_name" property="caseName" />
 		<result column="condition" property="condition" />
@@ -14,13 +15,13 @@
 		<result column="defect_no" property="defect_no" />
 		<result column="tester" property="tester" />
 		<result column="comment" property="comment" />
-		<result column="testsuite_id" property="testsuite_id" />
 	</resultMap>
 
 	<!-- テストケース1件登録 -->
 	<insert id="insertOne">
 		merge into t_testcase (
-			case_id
+			suite_id
+			, case_id
 			, case_name
 			, condition
 			, process
@@ -31,10 +32,10 @@
 			, defect_no
 			, tester
 			, comment
-			, testsuite_id
 		)
 		values (
-			#{caseId} 
+			#{testsuiteId}
+			, #{caseId} 
 			, #{caseName}
 			, #{condition}
 			, #{process}
@@ -45,14 +46,14 @@
 			, #{defectNo}
 			, #{tester}
 			, #{comment}
-			, #{testsuiteId}
 		)
 	</insert>
 
 	<!-- テストケース複数件登録 -->
 	<insert id="insertBulk">
 		merge into t_testcase (
-		  case_id
+		  suite_id
+		  , case_id
 		  , case_name
 		  , condition
 		  , process
@@ -63,12 +64,12 @@
 		  , defect_no
 		  , tester
 		  , comment
-		  , testsuite_id
 		)
 		values
 			<foreach collection="testcaseList" item="te" separator=",">
 			(
-			  #{te.caseId}
+			  #{te.suiteId}
+			  , #{te.caseId}
 			  , #{te.caseName}
 			  , #{te.condition}
 			  , #{te.process}
@@ -79,7 +80,6 @@
 			  , #{te.defectNo}
 			  , #{te.tester}
 			  , #{te.comment}
-			  , #{te.testsuiteId}
 			)
 			</foreach>
 	</insert>
@@ -91,7 +91,7 @@
 		from
 			t_testcase
 		where
-			testsuite_id = #{testsuiteId}
+			suite_id = #{suiteId}
 	</select>
 
 	<!-- テストケース複数件ID取得 -->
@@ -101,11 +101,11 @@
 		from
 			t_testcase
 		where
-			testsuite_id = #{testsuiteId}
+			suite_id = #{suiteId}
 	</select>
 
 	<!-- テストケース複数件削除 -->
-	<delete id="deleteAll">
+	<delete id="deleteById">
 		delete from
 			t_testcase
 		where

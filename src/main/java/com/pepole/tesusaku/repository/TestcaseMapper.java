@@ -23,5 +23,5 @@ public interface TestcaseMapper {
 	public List<Testcase> selectIdBySuiteId(String path);
 
 	// 複数件削除
-	public int deleteAll(@Param("deleteList")List<Testcase> deleteList);
+	public int deleteById(@Param("deleteList")List<Testcase> deleteList);
 }

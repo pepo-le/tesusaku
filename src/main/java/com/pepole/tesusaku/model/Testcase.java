@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Testcase {
+	private String suiteId;
 	private String caseId;
 	private String caseName;
 	private String condition;
@@ -15,5 +16,4 @@ public class Testcase {
 	private String defectNo;
 	private String tester;
 	private String comment;
-	private String testsuiteId;
 }

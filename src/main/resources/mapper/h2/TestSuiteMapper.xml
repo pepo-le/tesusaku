@@ -5,22 +5,67 @@
 	<resultMap type="com.pepole.tesusaku.model.Testsuite" id="testsuite">
 		<id column="suite_id" property="suiteId" />
 		<result column="suite_name" property="suiteName" />
+		<result column="admin_id" property="adminId" />
 	</resultMap>
 
 	<!-- テストスイート1件登録 -->
-	<insert id="insertOne">
+	<insert id="insertOne" useGeneratedKeys="true" keyProperty="suiteId">
 		insert into t_testsuite(
-			suite_id ,
-			suite_name 
+			suite_id
+			, suite_name
+			, admin_id
 		)
 		values (
-			#{suiteId} ,
-			#{suiteName} 
+			#{suiteId}
+			, #{suiteName}
+			, #{adminId}
 		)
 	</insert>
 
-	<!-- テストスイート -->
+	<!-- テストスイート全取得 -->
 	<select id="selectAll" resultType="Testsuite">
-		select * from t_testsuite
+		select
+			*
+		from
+			t_testsuite
+	</select>
+
+	<!-- テストスイート取得 -->
+	<select id="selectByUser" resultType="Testsuite">
+		select
+			*
+		from
+			t_testsuite
+		where
+			admin_id = #{userId}
+	</select>
+
+	<!-- テストスイート取得 -->
+	<select id="findByUser" resultType="Testsuite">
+		select
+			*
+		from
+			t_testsuite
+		join
+			t_assign
+		on
+			t_testsuite.suite_id = t_assign.suite_id
+		where
+			user_id = #{userId}
+	</select>
+
+	<!-- テストスイート+テストケース取得 -->
+	<select id="selectBySuiteidAndUser" resultType="Testsuite">
+		select
+			*
+		from
+			t_testsuite
+		join
+			t_testcase
+		on
+			t_testsuite.suite_id = t_testcase.testsuite_id
+		where
+			suite_id = #{suiteId}
+			, admin_id = #{userId}
 	</select>
 </mapper>

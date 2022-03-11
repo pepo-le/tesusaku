@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepole.tesusaku.repository.AssignMapper">
+	<!-- マッピング定義(アサイン) -->
+	<resultMap type="com.pepole.tesusaku.model.Assign" id="assign">
+		<id column="suite_id" property="suiteId" />
+		<id column="user_id" property="userId" />
+	</resultMap>
+
+	<insert id="insertOne">
+		insert into	t_assign(
+			suite_id
+			, user_id
+		)
+		values (
+			#{suiteId}
+			, #{userId}
+		)
+	</insert>
+</mapper>

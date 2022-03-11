@@ -3,6 +3,7 @@ package com.pepole.tesusaku.controller;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +30,9 @@ public class UserController {
 
     /** ユーザー詳細画面を表示 */
     @GetMapping("/user")
-    public String index(Model model) {
+    public String index(Model model, Authentication loginUser) {
     	
-    	List<Testsuite> suites = testsuiteService.getSuites();
+    	List<Testsuite> suites = testsuiteService.getSuiteList(loginUser.getName());
     	
         // Modelに登録
         model.addAttribute("testsuites", suites);

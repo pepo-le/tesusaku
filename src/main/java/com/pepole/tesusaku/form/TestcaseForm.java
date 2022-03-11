@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class TestcaseForm {
+	private String[] suiteId;
+
 	private String[] caseId;
 
 	private String[] caseName;
@@ -25,6 +27,4 @@ public class TestcaseForm {
 	private String[] tester;
 
 	private String[] comment;
-
-	private String[] testsuiteId;
 }

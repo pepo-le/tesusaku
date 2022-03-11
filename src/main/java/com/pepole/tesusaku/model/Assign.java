@@ -3,8 +3,7 @@ package com.pepole.tesusaku.model;
 import lombok.Data;
 
 @Data
-public class Testsuite {
+public class Assign {
 	private String suiteId;
-	private String suiteName;
-	private String adminId;
+	private String userId;
 }
