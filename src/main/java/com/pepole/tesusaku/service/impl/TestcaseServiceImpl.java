@@ -91,7 +91,7 @@ public class TestcaseServiceImpl implements TestcaseService {
     	 */
     	
     	// フォーム上にないテストケースを削除
-    	List<Testcase> existingList = mapper.selectIdBySuiteId(path);
+    	List<Testcase> existingList = mapper.findIdBySuiteId(path);
     	List<Testcase> deleteList = new ArrayList<>();
     	List<String> formIdList = new ArrayList<>(); 
 
@@ -136,13 +136,13 @@ public class TestcaseServiceImpl implements TestcaseService {
     /** テストケース取得 */
     @Override
     public List<Testcase> selectBySuiteId(String path) {
-    	return mapper.selectBySuiteId(path);
+    	return mapper.findBySuiteId(path);
     }
 
     /** テストケースID取得 */
     @Override
     public List<Testcase> selectIdBySuiteId(String path) {
-    	return mapper.selectIdBySuiteId(path);
+    	return mapper.findIdBySuiteId(path);
     }
     
 }

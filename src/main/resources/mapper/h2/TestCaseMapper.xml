@@ -85,7 +85,7 @@
 	</insert>
 
 	<!-- テストケース複数件取得 -->
-	<select id="selectBySuiteId" resultType="testcase">
+	<select id="findBySuiteId" resultType="testcase">
 		select
 			*
 		from
@@ -95,7 +95,7 @@
 	</select>
 
 	<!-- テストケース複数件ID取得 -->
-	<select id="selectIdBySuiteId" resultType="testcase">
+	<select id="findIdBySuiteId" resultType="testcase">
 		select
 			case_id
 		from

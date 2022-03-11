@@ -23,21 +23,11 @@
 	</insert>
 
 	<!-- テストスイート全取得 -->
-	<select id="selectAll" resultType="Testsuite">
+	<select id="findAll" resultType="Testsuite">
 		select
 			*
 		from
 			t_testsuite
-	</select>
-
-	<!-- テストスイート取得 -->
-	<select id="selectByUser" resultType="Testsuite">
-		select
-			*
-		from
-			t_testsuite
-		where
-			admin_id = #{userId}
 	</select>
 
 	<!-- テストスイート取得 -->
@@ -55,7 +45,7 @@
 	</select>
 
 	<!-- テストスイート+テストケース取得 -->
-	<select id="selectBySuiteidAndUser" resultType="Testsuite">
+	<select id="findBySuiteidAndUser" resultType="Testsuite">
 		select
 			*
 		from

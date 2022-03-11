@@ -39,6 +39,6 @@ public class TestsuiteServiceImpl implements TestsuiteService {
     /** テストスイート(+テストケース)取得 */
     @Override
     public List<Testsuite> getCaseList(String userId, Testsuite suite) {
-        return testsuiteMapperr.selectByUserAndSuiteid(userId);
+        return testsuiteMapperr.findByUserAndSuiteid(userId);
     }
 }
