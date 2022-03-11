@@ -34,7 +34,7 @@
 			, comment
 		)
 		values (
-			#{testsuiteId}
+			#{suiteId}
 			, #{caseId} 
 			, #{caseName}
 			, #{condition}
