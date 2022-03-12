@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,7 +65,8 @@ public class TestsuiteController {
         Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
         suite.setAdminId(loginUser.getName());
         
-        List<String> assignUsers = new ArrayList<>(Arrays.asList(testsuiteForm.getAssign()));
+        Optional<String[]> optionalUsers = Optional.ofNullable(testsuiteForm.getAssign());
+        List<String> assignUsers = new ArrayList<>(Arrays.asList(optionalUsers.orElse(new String[0])));
         
         testsuiteService.create(suite, assignUsers);
 
