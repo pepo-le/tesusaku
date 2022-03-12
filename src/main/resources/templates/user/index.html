@@ -12,7 +12,7 @@
     <div class="header border-bottom">
       <h1 class="h2">お知らせ</h1>
     </div>
-    <div class="header border-bottom">
+    <div class="header border-bottom mt-5">
       <h1 class="h2">テストスイート一覧</h1>
       <ul class="list-group" th:each="item: ${testsuites}">
       	<li class="list-group-item"><a th:href="@{/testsuite/} + ${item.suiteId}" th:text="${item.suiteName}"></a></li>

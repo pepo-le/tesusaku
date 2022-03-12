@@ -18,9 +18,9 @@
   <!-- ヘッダー -->
   <nav layout:replace="~{layout/header::header}"></nav>
   <!-- メニュー -->
-  <div class="container-fluid">
+  <div class="container-fluid d-none d-lg-block">
     <div class="row">
-      <nav class="col-sm-2 bg-light sidebar pt-2">
+      <nav class="col-lg-3 col-xl-2 bg-light sidebar pt-2">
         <div layout:replace="~{layout/menu-user::menu}"></div>
       </nav>
     </div>
@@ -28,7 +28,7 @@
   <!-- コンテンツ -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-10 offset-sm-2 main">
+      <div class="col-lg-9 col-xl-10 offset-lg-3 offset-xl-2">
         <div layout:fragment="content"></div>
       </div>
     </div>

@@ -2,6 +2,8 @@ package com.pepole.tesusaku.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,8 @@ public class UserController {
     private final TestsuiteService testsuiteService;
 
     private final ModelMapper modelMapper;
+    
+    private final HttpServletRequest httpServletRequest;
 
     /** ユーザー詳細画面を表示 */
     @GetMapping("/user")
@@ -34,10 +38,10 @@ public class UserController {
     	
     	List<Testsuite> suites = testsuiteService.getSuiteList(loginUser.getName());
     	
-        // Modelに登録
         model.addAttribute("testsuites", suites);
 
-        // ユーザー詳細画面を表示
+    	model.addAttribute("requestUri", httpServletRequest.getRequestURI());
+
         return "user/index";
     }
 

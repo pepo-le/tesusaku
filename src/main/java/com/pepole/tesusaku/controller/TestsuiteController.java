@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -41,10 +43,14 @@ public class TestsuiteController {
 	
 	private final ModelMapper modelMapper;
 	
+	private final HttpServletRequest httpServletRequest;
+	
 	@GetMapping("/testsuite/create")
 	public String getCreateForm(Model model, @ModelAttribute TestsuiteForm testsuiteForm,
 			Authentication loginUser) {
 		List<MUser> users = userService.getOthers(loginUser.getName());
+
+    	model.addAttribute("requestUri", httpServletRequest.getRequestURI());
 		
 		model.addAttribute("users", users);
 		
@@ -61,7 +67,7 @@ public class TestsuiteController {
         List<String> assignUsers = new ArrayList<>(Arrays.asList(testsuiteForm.getAssign()));
         
         testsuiteService.create(suite, assignUsers);
-		
+
 		return "redirect:/user";
 	}
 	
@@ -71,8 +77,9 @@ public class TestsuiteController {
     	
     	List<Testsuite> suites = testsuiteService.getSuiteList(loginUser.getName());
     	
-        // Modelに登録
         model.addAttribute("testsuites", suites);
+		
+    	model.addAttribute("requestUri", httpServletRequest.getRequestURI());
 
 		return "/testsuite/list";
 	}

@@ -5,17 +5,28 @@
 <head>
 </head>
 <body>
-  <nav layout:fragment="header" class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-dark">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">てすさく</a>
-      </div>
-      <form th:if="${#authorization.expression('isAuthenticated()')}" method="post" th:action="@{/logout}">
-        <button class="btn btn-link pull-right navbar-brand" type="submit">
-          ログアウト
-        </button>
-      </form>
-    </div>
-  </nav>
+	<nav layout:fragment="header" class="navbar navbar-expand-lg navbar-inverse navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">てすさく</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navmenu1" aria-controls="navmenu1"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navmenu1">
+			<div class="navbar-nav">
+				<div class="d-lg-none">
+					<a class="nav-item nav-link" th:href="@{/user}">ユーザーページ</a>
+					<a class="nav-item nav-link" th:href="@{/testsuite}">テストスイート一覧</a>
+					<a class="nav-item nav-link" th:href="@{/testsuite/create}">テストスイート作成</a>
+				</div>
+				<form class="nav-item ml-auto"
+					th:if="${#authorization.expression('isAuthenticated()')}"
+					method="post" th:action="@{/logout}">
+					<button class="btn btn-link pull-right navbar-brand" type="submit">
+						ログアウト</button>
+				</form>
+			</div>
+		</div>
+	</nav>
 </body>
 </html>
