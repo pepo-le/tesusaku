@@ -21,7 +21,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 
     /** テストケース1件作成 */
     @Override
-    public void create(TestcaseForm testcaseForm, String path) {
+    public void create(TestcaseForm testcaseForm, String suiteId) {
     	/**
     	 * フォームデータの形式
     	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
@@ -40,7 +40,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 		testcase.setDefectNo(testcaseForm.getDefectNo().length == 1 ? testcaseForm.getDefectNo()[0] : "");
 		testcase.setTester(testcaseForm.getTester().length == 1 ? testcaseForm.getTester()[0] : "");
 		testcase.setComment(testcaseForm.getComment().length == 1 ? testcaseForm.getComment()[0] : "");
-		testcase.setSuiteId(path);
+		testcase.setSuiteId(suiteId);
 
         mapper.insertOne(testcase);
     }
@@ -48,14 +48,14 @@ public class TestcaseServiceImpl implements TestcaseService {
     /** テストケース複数件編集 */
     @Transactional
     @Override
-    public void editBulk(TestcaseForm testcaseForm, String path) {
+    public void editBulk(TestcaseForm testcaseForm, String suiteId) {
     	/**
     	 * フォームデータの形式
     	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
     	 */
     	
     	// フォーム上にないテストケースを削除
-    	List<Testcase> existingList = mapper.findIdBySuiteId(path);
+    	List<Testcase> existingList = mapper.findCaseidBySuiteId(suiteId);
     	List<Testcase> deleteList = new ArrayList<>();
     	List<String> formIdList = new ArrayList<>(); 
 
@@ -89,7 +89,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 			testcase.setDefectNo(testcaseForm.getDefectNo()[i]);
 			testcase.setTester(testcaseForm.getTester()[i]);
 			testcase.setComment(testcaseForm.getComment()[i]);
-			testcase.setSuiteId(path);
+			testcase.setSuiteId(suiteId);
 
 			testcaseList.add(testcase);
 		}
@@ -99,14 +99,13 @@ public class TestcaseServiceImpl implements TestcaseService {
 
     /** テストケース取得 */
     @Override
-    public List<Testcase> selectBySuiteId(String path) {
-    	return mapper.findBySuiteId(path);
+    public List<Testcase> getBySuiteId(String suiteId) {
+    	return mapper.findBySuiteId(suiteId);
     }
 
     /** テストケースID取得 */
     @Override
-    public List<Testcase> selectIdBySuiteId(String path) {
-    	return mapper.findIdBySuiteId(path);
+    public List<Testcase> getCaseidBySuiteId(String suiteId) {
+    	return mapper.findCaseidBySuiteId(suiteId);
     }
-    
 }

@@ -14,7 +14,7 @@
 			<li class="breadcrumb-item active">テストケース作成フォーム</li>
 		</ul>
 		<h2>テストケース作成フォーム</h2>
-		<form method="post" th:action="@{/testsuite/} + ${path}" class="testcase-form">
+		<form method="post" th:action="@{/testsuite/} + ${suiteId}" class="testcase-form">
 			<table>
 				<thead>
 					<tr class="testcase-form__header">
@@ -75,7 +75,6 @@
 						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
 						<td><textarea name="comment" th:text="${testcase.comment}"></textarea></td>
 					</tr>
-				</tbody>
 			</table>
 			<span id="add-btn" class="add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> 追加</span>
 			<div>

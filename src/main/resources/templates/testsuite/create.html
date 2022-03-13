@@ -21,7 +21,7 @@
 			<div class="form-group d-flex flex-row">
 				<label class="col-sm-4" for="assign">アサインユーザー</label>
 				<select class="col-sm-6" name="assign" id="assign" multiple>
-					<option th:each="u : ${users}" th:value="${u.userId}" th:text="${u.userId}"></option>
+					<option th:each="u : ${users}" th:value="${u.userId}" th:text="${u.userName}"></option>
 				</select>
 			</div>
 			<div class="form-group text-center">

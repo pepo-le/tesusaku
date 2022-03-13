@@ -46,6 +46,7 @@
 	<select id="findByUserNot" resultType="MUser">
 		select
 			user_id
+			, user_name
 		from
 			m_user
 		where

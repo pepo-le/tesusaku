@@ -12,4 +12,7 @@ public interface AssignMapper {
 	
 	// 複数登録
 	public int insertBulk(String suiteId, @Param("assignUsers") List<String> assignUsers);
+	
+	// 取得
+	public List<String> findUserBySuiteid(String suiteId);
 }

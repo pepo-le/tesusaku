@@ -3,7 +3,7 @@
 <mapper namespace="com.pepole.tesusaku.repository.TestcaseMapper">
 	<!-- マッピング定義(テストケース) -->
 	<resultMap type="com.pepole.tesusaku.model.Testcase" id="testcase">
-		<id column="suite_id" property="suite_id" />
+		<id column="suite_id" property="suiteId" />
 		<id column="case_id" property="caseId" />
 		<result column="case_name" property="caseName" />
 		<result column="condition" property="condition" />
@@ -95,7 +95,7 @@
 	</select>
 
 	<!-- テストケース複数件ID取得 -->
-	<select id="findIdBySuiteId" resultType="testcase">
+	<select id="findCaseidBySuiteId" resultType="testcase">
 		select
 			case_id
 		from

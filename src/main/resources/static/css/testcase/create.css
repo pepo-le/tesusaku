@@ -49,6 +49,10 @@
 	background-color: #fff;
 }
 
+.testcase-form__immutable {
+	border: solid 1px #888;
+}
+
 .testcase-form textarea {
 	font-size: 0.7rem;	
 }

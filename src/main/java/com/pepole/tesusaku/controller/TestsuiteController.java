@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import com.pepole.tesusaku.form.TestsuiteForm;
 import com.pepole.tesusaku.model.MUser;
 import com.pepole.tesusaku.model.Testcase;
 import com.pepole.tesusaku.model.Testsuite;
+import com.pepole.tesusaku.service.AssignService;
 import com.pepole.tesusaku.service.TestcaseService;
 import com.pepole.tesusaku.service.TestsuiteService;
 import com.pepole.tesusaku.service.UserService;
@@ -40,12 +42,15 @@ public class TestsuiteController {
 
 	private final UserService userService;
 	
+	private final AssignService assignService;
+	
 	private final TestcaseComponent testcaseComponent;
 	
 	private final ModelMapper modelMapper;
 	
 	private final HttpServletRequest httpServletRequest;
 	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping("/testsuite/create")
 	public String getCreateForm(Model model, @ModelAttribute TestsuiteForm testsuiteForm,
 			Authentication loginUser) {
@@ -58,6 +63,7 @@ public class TestsuiteController {
 		return "/testsuite/create";
 	}
 
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@PostMapping("/testsuite")
 	public String createSuite(Model model, @Validated @ModelAttribute TestsuiteForm testsuiteForm,
 			Authentication loginUser) {
@@ -86,28 +92,33 @@ public class TestsuiteController {
 		return "/testsuite/list";
 	}
 
-	@GetMapping("/testsuite/{path}")
-	public String getSuite(@PathVariable String path, Model model, @ModelAttribute TestcaseForm testcaseForm,
+	@GetMapping("/testsuite/{suiteId}")
+	public String getSuite(@PathVariable String suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
 			Authentication loginUser) {
-        model.addAttribute("path", path);
+        model.addAttribute("suiteId", suiteId);
 
 		Map<Integer, String> resultMap = testcaseComponent.getResultMap();
 		model.addAttribute("resultMap", resultMap);
         
-        List<Testcase> cases = testcaseService.selectBySuiteId(path);
+        List<Testcase> cases = testcaseService.getBySuiteId(suiteId);
         model.addAttribute("cases", cases);
+
+		// アサインユーザーの確認
+		List<String> assignedUsers = assignService.getAssignedUsers(suiteId);
+		boolean isAssigned = assignedUsers.contains(loginUser.getName());
+		model.addAttribute("isAssigned", isAssigned);
 		
 		return "/testsuite/caseform";
 	}
 	
-	@PostMapping("/testsuite/{path}")
-	public String createSuite(@PathVariable String path, Model model, @ModelAttribute TestcaseForm testcaseForm,
+	@PostMapping("/testsuite/{suiteId}")
+	public String createSuite(@PathVariable String suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
 			Authentication loginUser) {
 		
 		if (testcaseForm.getCaseId().length == 1) {
-			testcaseService.create(testcaseForm, path);
+			testcaseService.create(testcaseForm, suiteId);
 		} else {
-			testcaseService.editBulk(testcaseForm, path);
+			testcaseService.editBulk(testcaseForm, suiteId);
 		}
 
 		return "redirect:/user";
