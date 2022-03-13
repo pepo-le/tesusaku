@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -103,10 +104,7 @@ public class TestsuiteController {
         List<Testcase> cases = testcaseService.getBySuiteId(suiteId);
         model.addAttribute("cases", cases);
 
-		// アサインユーザーの確認
-		List<String> assignedUsers = assignService.getAssignedUsers(suiteId);
-		boolean isAssigned = assignedUsers.contains(loginUser.getName());
-		model.addAttribute("isAssigned", isAssigned);
+		model.addAttribute("isAssigned", isAssigned(suiteId, loginUser.getName()));
 		
 		return "/testsuite/caseform";
 	}
@@ -114,13 +112,25 @@ public class TestsuiteController {
 	@PostMapping("/testsuite/{suiteId}")
 	public String createSuite(@PathVariable String suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
 			Authentication loginUser) {
-		
-		if (testcaseForm.getCaseId().length == 1) {
-			testcaseService.create(testcaseForm, suiteId);
-		} else {
-			testcaseService.editBulk(testcaseForm, suiteId);
-		}
+
+		if (isAssigned(suiteId, loginUser.getName())) {
+			// アサインされているとき
+			
+			String[] roles = loginUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new);
+			
+			if (Arrays.asList(roles).contains("ROLE_ADMIN")) {
+				testcaseService.updateCases(testcaseForm, suiteId);
+			} else {
+				testcaseService.updateResult(testcaseForm, suiteId);
+			}
+		}		
 
 		return "redirect:/user";
+	}
+	
+	// アサインの確認
+	private boolean isAssigned(String suiteId, String userId) {
+		List<String> assignedUsers = assignService.getAssignedUsers(suiteId);
+		return assignedUsers.contains(userId);
 	}
 }

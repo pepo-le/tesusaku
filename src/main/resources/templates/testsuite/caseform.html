@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout-caseform}">
+	layout:decorate="~{layout/layout-caseform}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/testcase/create.css}" />
@@ -15,7 +16,8 @@
 		</ul>
 		<h2>テストケース作成フォーム</h2>
 		<form method="post" th:action="@{/testsuite/} + ${suiteId}" class="testcase-form">
-			<table>
+			<table class="testcase-form__table" th:if="${isAssigned}" sec:authorize="hasRole('ADMIN')">
+				<!-- 管理者用 -->
 				<thead>
 					<tr class="testcase-form__header">
 						<th class="testcase-form__delete">削除</th>
@@ -53,7 +55,7 @@
 					</tr>
 				</tbody>
 				
-				<tbody th:if="${cases.size() != 0}" id="testcase-form-body">
+				<tbody th:if="${isAssigned && cases.size() != 0}" id="testcase-form-body">
 					<tr th:each="testcase, stat : ${cases}">
 						<td th:if="${stat.index == 0}"></td>
 						<td th:if="${stat.index > 0}" th:text="－" class="e-delete-btn"></td>
@@ -75,10 +77,97 @@
 						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
 						<td><textarea name="comment" th:text="${testcase.comment}"></textarea></td>
 					</tr>
+				</tbody>
 			</table>
-			<span id="add-btn" class="add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> 追加</span>
-			<div>
-				<input type="submit" value="送信" />
+
+			<table class="testcase-form__table" th:if="${isAssigned}" sec:authorize="! hasRole('ADMIN')">
+				<!-- アサイン実行者用 -->
+				<thead>
+					<tr class="testcase-form__header">
+						<th class="testcase-form__delete">削除</th>
+						<th class="testcase-form__header__pre">No.</th>
+						<th class="testcase-form__header__pre">項目</th>
+						<th class="testcase-form__header__pre">前提条件</th>
+						<th class="testcase-form__header__pre">手順</th>
+						<th class="testcase-form__header__pre">期待結果</th>
+						<th class="testcase-form__header__after">結果</th>
+						<th class="testcase-form__header__after">確認日</th>
+						<th class="testcase-form__header__after">確認Ver.</th>
+						<th class="testcase-form__header__after">不具合No.</th>
+						<th class="testcase-form__header__after">実行者</th>
+						<th class="testcase-form__header__after">コメント</th>
+					</tr>
+				</thead>
+				<tbody th:if="${cases.size() != 0}" id="testcase-form-body">
+					<tr th:each="testcase, stat : ${cases}">
+						<td class="testcase-form__immutable e-delete-btn"></td>
+						<td class="testcase-form__immutable"><input class="testcase-form__id testcase-form__input--disabled" type="text" name="caseId" th:value="${testcase.caseId}" /></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.caseName}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.condition}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.process}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.expect}"></p></td>
+						<td>
+							<select class="testcase-form__result" name="result">
+								<option th:each="result : ${resultMap}" th:value="${result.key}"
+									th:text="${result.value}" th:selected="${result.key} == ${testcase.result}"></option>
+							</select>
+						</td>
+						<td th:if="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
+						<td th:unless="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate}" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
+						<td><textarea name="comment" th:text="${testcase.comment}"></textarea></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="testcase-form__table" th:unless="${isAssigned}">
+				<!-- 非アサインユーザー用 -->
+				<thead>
+					<tr class="testcase-form__header">
+						<th class="testcase-form__delete">削除</th>
+						<th class="testcase-form__header__pre">No.</th>
+						<th class="testcase-form__header__pre">項目</th>
+						<th class="testcase-form__header__pre">前提条件</th>
+						<th class="testcase-form__header__pre">手順</th>
+						<th class="testcase-form__header__pre">期待結果</th>
+						<th class="testcase-form__header__after">結果</th>
+						<th class="testcase-form__header__after">確認日</th>
+						<th class="testcase-form__header__after">確認Ver.</th>
+						<th class="testcase-form__header__after">不具合No.</th>
+						<th class="testcase-form__header__after">実行者</th>
+						<th class="testcase-form__header__after">コメント</th>
+					</tr>
+				</thead>
+				<tbody th:if="${cases.size() != 0}" id="testcase-form-body">
+					<tr th:each="testcase, stat : ${cases}">
+						<td class="testcase-form__immutable e-delete-btn"></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--id" th:text="${testcase.caseId}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.caseName}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.condition}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.process}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.expect}"></p></td>
+						<td th:switch="${testcase.result}">
+							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="0"></p>
+							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="1" th:text="OK"></p>
+							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="2" th:text="NG"></p>
+							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="3" th:text="skip"></p>
+							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="4" th:text="pendding"></p>
+							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="5" th:text="'N/A'"></p>
+						</td>
+						<td th:if="${testcase.checkDate == '9999-12-31'}"><p class="testcase-form__immutable testcase-form__immutable--lg"></p></td>
+						<td th:unless="${testcase.checkDate == '9999-12-31'}"><p class="testcase-form__immutable testcase-form__immutable-lg" th:text="${testcase.checkDate}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.checkVer}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.defectNo}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.tester}"></p></td>
+						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.comment}"></p></td>
+					</tr>
+				</tbody>
+			</table>
+			<span id="add-btn" class="add-btn" sec:authorize="hasRole('ADMIN')" th:if="${isAssigned}"><i class="fa fa-plus-circle" aria-hidden="true"></i> 追加</span>
+			<div class="mt-3 mb-3" th:if="${isAssigned}">
+				<input type="submit" value="送信" class="btn btn-primary" />
 			</div>
 		</form>
 

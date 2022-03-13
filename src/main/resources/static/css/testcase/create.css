@@ -1,7 +1,19 @@
 @charset "UTF-8";
 
+.testcase-wrapper {
+	position: relative;
+	overflow: visible;
+	width: auto;
+	max-width: none;
+	top: 1rem;
+}
+
 .testcase-form {
 	font-size: 1rem;	
+}
+
+.testcase-form__table {
+	border-collapse: separate;
 }
 
 .testcase-form__header {
@@ -17,13 +29,21 @@
 }
 
 .testcase-form textarea {
-	height: 6.4rem;
 	width: 10rem;
+	height: 6.4rem;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    outline: none;
+	font-size: 0.7rem;	
+    background: none;
+    resize: none;
 }
 
 .testcase-form__id {
 	height: 6.4rem;
 	width: 2.4rem;
+    border: none;
 }
 
 .testcase-form__result {
@@ -32,8 +52,13 @@
 }
 
 .testcase-form__input-text {
-	height: 6.4rem;
 	width: 10rem;
+	height: 6.4rem;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    background: none;
 }
 
 .testcase-form__delete {
@@ -47,14 +72,6 @@
 	position: sticky;
 	top: 0;
 	background-color: #fff;
-}
-
-.testcase-form__immutable {
-	border: solid 1px #888;
-}
-
-.testcase-form textarea {
-	font-size: 0.7rem;	
 }
 
 .testcase-form__result {
@@ -79,4 +96,36 @@
 	font-size: 1.4rem;
 	text-align: center;
 	cursor: pointer;
+}
+
+.testcase-form__immutable {
+	color: #000;
+	background-color: #eee;
+}
+
+.testcase-form__immutable--id {
+	height: 6.4rem;
+	width: 2.4rem;
+}
+
+.testcase-form__immutable--lg {
+	width: 10rem;
+	height: 6.4rem;
+}
+
+.testcase-form td {
+	border: solid 1px #888;
+}
+
+.testcase-form p {
+	margin: 0;
+}
+
+.testcase-form select {
+	background-color: #fff;
+}
+
+.testcase-form__input--disabled {
+	background: #eee;
+	pointer-events: none;
 }

@@ -4,6 +4,16 @@ html {
 	font-size: 100%;
 }
 
+.header-nav {
+	position: fixed;
+	width: 100%;
+	z-index: 9999;
+}
+
+.content {
+	padding-top: 4rem;
+}
+
 .sidebar {
   position: fixed;
   display: block;

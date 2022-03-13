@@ -24,4 +24,10 @@ public interface TestcaseMapper {
 
 	// 複数件削除
 	public int deleteById(@Param("deleteList")List<Testcase> deleteList);
+
+	// 実行結果更新
+	public int updateResultOne(Testcase testcase);
+	
+	// 複数実行結果更新
+	public int updateResultBulk(@Param("testcaseList")List<Testcase> testcaseList);
 }

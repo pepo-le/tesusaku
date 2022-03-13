@@ -115,4 +115,55 @@
 				</foreach>
 			)
 	</delete>
+
+	<!-- テストケース実行結果1件更新 -->
+	<update id="updateResultOne">
+		merge into t_testcase (
+			suite_id
+			, case_id
+			, result
+			, check_date
+			, check_ver
+			, defect_no
+			, tester
+			, comment
+		)
+		values (
+			#{suiteId}
+			, #{caseId} 
+			, #{result}
+			, #{checkDate}
+			, #{checkVer}
+			, #{defectNo}
+			, #{tester}
+			, #{comment}
+		)
+	</update>
+
+	<!-- テストケース実行結果更新 -->
+	<update id="updateResultBulk">
+		merge into t_testcase (
+		  suite_id
+		  , case_id
+		  , result
+		  , check_date
+		  , check_ver
+		  , defect_no
+		  , tester
+		  , comment
+		)
+		values
+			<foreach collection="testcaseList" item="te" separator=",">
+			(
+			  #{te.suiteId}
+			  , #{te.caseId}
+			  , #{te.result}
+			  , #{te.checkDate}
+			  , #{te.checkVer}
+			  , #{te.defectNo}
+			  , #{te.tester}
+			  , #{te.comment}
+			)
+			</foreach>
+	</update>
 </mapper>

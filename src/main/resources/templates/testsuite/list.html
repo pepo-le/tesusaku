@@ -9,8 +9,8 @@
 </head>
 <body>
   <div layout:fragment="content">
-    <div class="header border-bottom">
-      <h1 class="h2">テストスイート一覧</h1>
+    <div>
+      <h2 class="h2 header border-bottom">テストスイート一覧</h2>
       <ul class="list-group" th:each="item: ${testsuites}">
       	<li class="list-group-item"><a th:href="@{/testsuite/} + ${item.suiteId}" th:text="${item.suiteName}"></a></li>
       </ul>
