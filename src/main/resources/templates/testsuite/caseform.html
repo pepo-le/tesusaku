@@ -11,7 +11,7 @@
 <body>
 	<div layout:fragment="content">
 		<ul class="breadcrumb">
-			<li class="breadcrumb-item"><a th:href="@{/user}">ユーザーページ</a></li>	
+			<li class="breadcrumb-item"><a th:href="@{/user}">ユーザーページ</a></li>
 			<li class="breadcrumb-item active">テストケース作成フォーム</li>
 		</ul>
 		<h2>テストケース作成フォーム</h2>
@@ -54,7 +54,7 @@
 						<td><textarea th:field="*{comment}"></textarea></td>
 					</tr>
 				</tbody>
-				
+
 				<tbody th:if="${isAssigned && cases.size() != 0}" id="testcase-form-body">
 					<tr th:each="testcase, stat : ${cases}">
 						<td th:if="${stat.index == 0}"></td>
@@ -70,8 +70,8 @@
 									th:text="${result.value}" th:selected="${result.key} == ${testcase.result}"></option>
 							</select>
 						</td>
-						<td th:if="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
-						<td th:unless="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate}" /></td>
+						<td th:if="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
+						<td th:unless="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate.toString()}" /></td>
 						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" /></td>
 						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" /></td>
 						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
@@ -102,18 +102,18 @@
 					<tr th:each="testcase, stat : ${cases}">
 						<td class="testcase-form__immutable e-delete-btn"></td>
 						<td class="testcase-form__immutable"><input class="testcase-form__id testcase-form__input--disabled" type="text" name="caseId" th:value="${testcase.caseId}" /></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.caseName}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.condition}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.process}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.expect}"></p></td>
+						<td class="testcase-form__immutable"><textarea name="caseName" th:text="${testcase.caseName}" disabled></textarea></td>
+						<td class="testcase-form__immutable"><textarea name="condition" th:text="${testcase.condition}" disabled></textarea></td>
+						<td class="testcase-form__immutable"><textarea name="process" th:text="${testcase.process}" disabled></textarea></td>
+						<td class="testcase-form__immutable"><textarea name="expect" th:text="${testcase.expect}" disabled></textarea></td>
 						<td>
 							<select class="testcase-form__result" name="result">
 								<option th:each="result : ${resultMap}" th:value="${result.key}"
 									th:text="${result.value}" th:selected="${result.key} == ${testcase.result}"></option>
 							</select>
 						</td>
-						<td th:if="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
-						<td th:unless="${testcase.checkDate == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate}" /></td>
+						<td th:if="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
+						<td th:unless="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate.toString()}" /></td>
 						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" /></td>
 						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" /></td>
 						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
@@ -143,12 +143,12 @@
 				<tbody th:if="${cases.size() != 0}" id="testcase-form-body">
 					<tr th:each="testcase, stat : ${cases}">
 						<td class="testcase-form__immutable e-delete-btn"></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--id" th:text="${testcase.caseId}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.caseName}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.condition}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.process}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.expect}"></p></td>
-						<td th:switch="${testcase.result}">
+						<td class="testcase-form__immutable"><input class="testcase-form__id testcase-form__input--disabled" type="text" name="caseId" th:value="${testcase.caseId}" /></td>
+						<td class="testcase-form__immutable"><textarea name="caseName" th:text="${testcase.caseName}" disabled></textarea></td>
+						<td class="testcase-form__immutable"><textarea name="condition" th:text="${testcase.condition}" disabled></textarea></td>
+						<td class="testcase-form__immutable"><textarea name="process" th:text="${testcase.process}" disabled></textarea></td>
+						<td class="testcase-form__immutable"><textarea name="expect" th:text="${testcase.expect}" disabled></textarea></td>
+						<td class="testcase-form__immutable" th:switch="${testcase.result}">
 							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="0"></p>
 							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="1" th:text="OK"></p>
 							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="2" th:text="NG"></p>
@@ -156,12 +156,12 @@
 							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="4" th:text="pendding"></p>
 							<p class="testcase-form__immutable testcase-form__immutable--lg" th:case="5" th:text="'N/A'"></p>
 						</td>
-						<td th:if="${testcase.checkDate == '9999-12-31'}"><p class="testcase-form__immutable testcase-form__immutable--lg"></p></td>
-						<td th:unless="${testcase.checkDate == '9999-12-31'}"><p class="testcase-form__immutable testcase-form__immutable-lg" th:text="${testcase.checkDate}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.checkVer}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.defectNo}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.tester}"></p></td>
-						<td><p class="testcase-form__immutable testcase-form__immutable--lg" th:text="${testcase.comment}"></p></td>
+						<td class="testcase-form__immutable" th:if="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
+						<td class="testcase-form__immutable" th:unless="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate.toString()}" /></td>
+						<td class="testcase-form__immutable"><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" disabled /></td>
+						<td class="testcase-form__immutable"><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" disabled /></td>
+						<td class="testcase-form__immutable"><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" disabled /></td>
+						<td class="testcase-form__immutable"><textarea name="comment" th:text="${testcase.comment}" disabled></textarea></td>
 					</tr>
 				</tbody>
 			</table>
