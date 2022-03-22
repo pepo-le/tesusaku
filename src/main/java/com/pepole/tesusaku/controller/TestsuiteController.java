@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -65,9 +66,14 @@ public class TestsuiteController {
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@PostMapping("/testsuite")
+	@PostMapping("/testsuite/create")
 	public String createSuite(Model model, @Validated @ModelAttribute TestsuiteForm testsuiteForm,
+			BindingResult bindingResult,
 			Authentication loginUser) {
+
+        if (bindingResult.hasErrors()) {
+            return getCreateForm(model, testsuiteForm, loginUser);
+        }
 
         Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
         suite.setAdminId(loginUser.getName());
