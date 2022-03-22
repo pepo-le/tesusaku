@@ -58,6 +58,8 @@ var tesusaku = tesusaku || {};
 
 		const delete_btn = tesusaku.createDeleteBtn();
 		const case_id = tesusaku.createInput('caseId', 'text');
+		case_id.setAttribute("pattern", "[0-9]{1,3}");
+		case_id.setAttribute("style", "ime-mode:disabled;");
 		case_id.setAttribute("required", "true");
 		const case_name = tesusaku.createTextarea('caseName');
 		const condition = tesusaku.createTextarea('condition');
