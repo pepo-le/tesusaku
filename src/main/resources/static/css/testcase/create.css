@@ -12,6 +12,30 @@
 	font-size: 1rem;	
 }
 
+.testcase-form td {
+	border: solid 1px #888;
+}
+
+.testcase-form p {
+	margin: 0;
+}
+
+.testcase-form select {
+	background-color: #fff;
+}
+
+.testcase-form textarea {
+	width: 10rem;
+	height: 6.4rem;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    outline: none;
+	font-size: 0.7rem;	
+    background: none;
+    resize: none;
+}
+
 .testcase-form__table {
 	border-collapse: separate;
 }
@@ -26,18 +50,6 @@
 
 .testcase-form__header__after {
 	background-color: #ff9;
-}
-
-.testcase-form textarea {
-	width: 10rem;
-	height: 6.4rem;
-    border: none;
-    border-radius: 0;
-    padding: 0;
-    outline: none;
-	font-size: 0.7rem;	
-    background: none;
-    resize: none;
 }
 
 .testcase-form__id {
@@ -99,13 +111,12 @@
 }
 
 .testcase-form__immutable {
+	background-color: #f3f3fe;
 	color: #000;
-	background-color: #eee;
 }
 
-.testcase-form__immutable--id {
-	height: 6.4rem;
-	width: 2.4rem;
+.testcase-form__immutable textarea {
+	color: #000;
 }
 
 .testcase-form__immutable--lg {
@@ -113,19 +124,7 @@
 	height: 6.4rem;
 }
 
-.testcase-form td {
-	border: solid 1px #888;
-}
-
-.testcase-form p {
-	margin: 0;
-}
-
-.testcase-form select {
-	background-color: #fff;
-}
-
 .testcase-form__input--disabled {
-	background: #eee;
 	pointer-events: none;
+	background-color: #f3f3fe;
 }
