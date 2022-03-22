@@ -117,6 +117,8 @@
 			from
 				n
 			where
+				tc.suite_id = n.suite_id
+			and
 				tc.case_id = n.case_id
 			returning
 				tc.case_id
