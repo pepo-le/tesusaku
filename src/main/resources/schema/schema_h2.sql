@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS m_user (
     password VARCHAR(100) ,
     user_name VARCHAR(50) ,
     role VARCHAR(50)
-);
+)
+;
 
 /* テストスイートテーブル */
 CREATE TABLE IF NOT EXISTS t_testsuite (
@@ -13,7 +14,8 @@ CREATE TABLE IF NOT EXISTS t_testsuite (
     admin_id VARCHAR(50) ,
     PRIMARY KEY(suite_id) ,
     FOREIGN KEY(admin_id) REFERENCES m_user(user_id)
-);
+)
+;
 
 /* テストケーステーブル */
 CREATE TABLE IF NOT EXISTS t_testcase (
@@ -31,7 +33,8 @@ CREATE TABLE IF NOT EXISTS t_testcase (
     comment VARCHAR(2000) ,
     PRIMARY KEY(suite_id, case_id) ,
     FOREIGN KEY(suite_id) REFERENCES t_testsuite(suite_id)
-);
+)
+;
 
 /* アサインテーブル */
 CREATE TABLE IF NOT EXISTS t_assign (
@@ -40,4 +43,5 @@ CREATE TABLE IF NOT EXISTS t_assign (
     PRIMARY KEY(suite_id, user_id) ,
     FOREIGN KEY(suite_id) REFERENCES t_testsuite(suite_id) ,
     FOREIGN KEY(user_id) REFERENCES m_user(user_id)
-);
+)
+;

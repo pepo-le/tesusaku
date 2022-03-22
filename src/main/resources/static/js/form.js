@@ -1,75 +1,76 @@
-var pepole = pepole || {};
+var tesusaku = tesusaku || {};
 
 (function (global) {
-	pepole.form = document.getElementById('testcase-form-body'),
+	tesusaku.form = document.getElementById('testcase-form-body'),
 
-	pepole.createInput = function (name, type) {
+	tesusaku.createInput = function (name, type) {
 		const input = document.createElement('input')
-		
+
 		input.setAttribute('name', name);
 		input.setAttribute('type', type);
-		
+
 		return input;
 	}
 
-	pepole.createTextarea = function (name) {
+	tesusaku.createTextarea = function (name) {
 		const textarea = document.createElement('textarea')
-		
+
 		textarea.setAttribute('name', name);
-		
+
 		return textarea;
 	}
 
-	pepole.createTd = function (inner) {
+	tesusaku.createTd = function (inner) {
 		const td = document.createElement('td');
 		td.appendChild(inner);
 
 		return td;
 	}
 
-	pepole.createSelect = function (results) {
+	tesusaku.createSelect = function (results) {
 		const select = document.createElement('select');
 		select.setAttribute('name', 'result');
 
 		results.forEach(function(value, index) {
 			const option = document.createElement('option');
-			
+
 			option.setAttribute('value', index);
 			option.textContent = value;
-			
+
 			select.appendChild(option);
 		});
 
 		return select;
 	}
 
-	pepole.createDeleteBtn = function () {
+	tesusaku.createDeleteBtn = function () {
 		const td = document.createElement('td');
-		
+
 		td.setAttribute('class', 'delete-btn');
 		td.textContent = '－';
-		
+
 		return td;
 	}
 
-	pepole.add_btn = document.getElementById('add-btn');
+	tesusaku.add_btn = document.getElementById('add-btn');
 
-	pepole.add_btn.addEventListener('click', function() {
+	tesusaku.add_btn.addEventListener('click', function() {
 
-		const delete_btn = pepole.createDeleteBtn();
-		const case_id = pepole.createInput('caseId', 'text');
-		const case_name = pepole.createTextarea('caseName');
-		const condition = pepole.createTextarea('condition');
-		const process = pepole.createTextarea('process');
-		const expect = pepole.createTextarea('expect');
-		const check_date = pepole.createInput('checkDate', 'date');
-		const check_ver = pepole.createInput('checkVer', 'text');
-		const defect_no = pepole.createInput('defectNo', 'text');
-		const tester = pepole.createInput('tester', 'text');
-		const comment = pepole.createTextarea('comment');
+		const delete_btn = tesusaku.createDeleteBtn();
+		const case_id = tesusaku.createInput('caseId', 'text');
+		case_id.setAttribute("required", "true");
+		const case_name = tesusaku.createTextarea('caseName');
+		const condition = tesusaku.createTextarea('condition');
+		const process = tesusaku.createTextarea('process');
+		const expect = tesusaku.createTextarea('expect');
+		const check_date = tesusaku.createInput('checkDate', 'date');
+		const check_ver = tesusaku.createInput('checkVer', 'text');
+		const defect_no = tesusaku.createInput('defectNo', 'text');
+		const tester = tesusaku.createInput('tester', 'text');
+		const comment = tesusaku.createTextarea('comment');
 
 		const RESULTS = ['', 'OK', 'NG', 'skip', 'pending', 'N/A'];
-		const result = pepole.createSelect(RESULTS) ;
+		const result = tesusaku.createSelect(RESULTS) ;
 
 		case_id.classList.add('testcase-form__id');
 		result.classList.add('testcase-form__result');
@@ -77,33 +78,32 @@ var pepole = pepole || {};
 		check_ver.classList.add('testcase-form__input-text');
 		defect_no.classList.add('testcase-form__input-text');
 		tester.classList.add('testcase-form__input-text');
-		
+
 		const tr = document.createElement('tr');
 		tr.appendChild(delete_btn);
-		tr.appendChild(pepole.createTd(case_id));
-		tr.appendChild(pepole.createTd(case_name));
-		tr.appendChild(pepole.createTd(condition));
-		tr.appendChild(pepole.createTd(process));
-		tr.appendChild(pepole.createTd(expect));
-		tr.appendChild(pepole.createTd(result));
-		tr.appendChild(pepole.createTd(check_date));
-		tr.appendChild(pepole.createTd(check_ver));
-		tr.appendChild(pepole.createTd(defect_no));
-		tr.appendChild(pepole.createTd(tester));
-		tr.appendChild(pepole.createTd(comment));
-		pepole.form.appendChild(tr);
-		
+		tr.appendChild(tesusaku.createTd(case_id));
+		tr.appendChild(tesusaku.createTd(case_name));
+		tr.appendChild(tesusaku.createTd(condition));
+		tr.appendChild(tesusaku.createTd(process));
+		tr.appendChild(tesusaku.createTd(expect));
+		tr.appendChild(tesusaku.createTd(result));
+		tr.appendChild(tesusaku.createTd(check_date));
+		tr.appendChild(tesusaku.createTd(check_ver));
+		tr.appendChild(tesusaku.createTd(defect_no));
+		tr.appendChild(tesusaku.createTd(tester));
+		tr.appendChild(tesusaku.createTd(comment));
+		tesusaku.form.appendChild(tr);
+
 		delete_btn.addEventListener('click', function(e) {
 			e.currentTarget.parentNode.remove();
 		})
 	});
 
-	pepole.e_del_btn = document.querySelectorAll('.e-delete-btn');
+	tesusaku.e_del_btn = document.querySelectorAll('.e-delete-btn');
 
-	pepole.e_del_btn.forEach(function(item) {
+	tesusaku.e_del_btn.forEach(function(item) {
 		item.addEventListener('click', function(e) {
 			e.currentTarget.parentNode.remove();
 		});
 	});
-	
 }(this));

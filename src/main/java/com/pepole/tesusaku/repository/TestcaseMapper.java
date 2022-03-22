@@ -17,10 +17,10 @@ public interface TestcaseMapper {
 	public int insertBulk(@Param("testcaseList")List<Testcase> testcaseList);
 
 	// 複数取得
-	public List<Testcase> findBySuiteId(String suiteId);
+	public List<Testcase> findBySuiteId(int suiteId);
 
 	// 複数件ID取得
-	public List<Testcase> findCaseidBySuiteId(String suiteId);
+	public List<Testcase> findCaseidBySuiteId(int suiteId);
 
 	// 複数件削除
 	public int deleteById(@Param("deleteList")List<Testcase> deleteList);
@@ -29,5 +29,5 @@ public interface TestcaseMapper {
 	public int updateResultOne(Testcase testcase);
 	
 	// 複数実行結果更新
-	public int updateResultBulk(@Param("testcaseList")List<Testcase> testcaseList);
+	public int updateResultBulk(@Param("testcaseList")List<Testcase> testcaseList, int suiteId);
 }

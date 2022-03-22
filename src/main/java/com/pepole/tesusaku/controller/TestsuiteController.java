@@ -61,7 +61,7 @@ public class TestsuiteController {
 		
 		model.addAttribute("users", users);
 		
-		return "/testsuite/create";
+		return "testsuite/create";
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -90,11 +90,11 @@ public class TestsuiteController {
 		
     	model.addAttribute("requestUri", httpServletRequest.getRequestURI());
 
-		return "/testsuite/list";
+		return "testsuite/list";
 	}
 
 	@GetMapping("/testsuite/{suiteId}")
-	public String getSuite(@PathVariable String suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
+	public String getSuite(@PathVariable int suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
 			Authentication loginUser) {
         model.addAttribute("suiteId", suiteId);
 
@@ -106,11 +106,11 @@ public class TestsuiteController {
 
 		model.addAttribute("isAssigned", isAssigned(suiteId, loginUser.getName()));
 		
-		return "/testsuite/caseform";
+		return "testsuite/caseform";
 	}
 	
 	@PostMapping("/testsuite/{suiteId}")
-	public String createSuite(@PathVariable String suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
+	public String createSuite(@PathVariable int suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
 			Authentication loginUser) {
 
 		if (isAssigned(suiteId, loginUser.getName())) {
@@ -129,7 +129,7 @@ public class TestsuiteController {
 	}
 	
 	// アサインの確認
-	private boolean isAssigned(String suiteId, String userId) {
+	private boolean isAssigned(int suiteId, String userId) {
 		List<String> assignedUsers = assignService.getAssignedUsers(suiteId);
 		return assignedUsers.contains(userId);
 	}

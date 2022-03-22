@@ -27,7 +27,7 @@ public class TestsuiteServiceImpl implements TestsuiteService {
         testsuiteMapperr.insertOne(suite);
 
         assignUsers.add(suite.getAdminId());
-        assignMapper.insertBulk(suite.getSuiteId(), assignUsers);
+        assignMapper.insertBulk(Integer.parseInt(suite.getSuiteId()), assignUsers);
     }
     
     /** テストスイート一覧取得 */

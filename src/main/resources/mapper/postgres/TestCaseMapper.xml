@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepole.tesusaku.repository.TestcaseMapper">
+	<!-- マッピング定義(テストケース) -->
+	<resultMap type="com.pepole.tesusaku.model.Testcase" id="testcase">
+		<id column="suite_id" property="suiteId" />
+		<id column="case_id" property="caseId" />
+		<result column="case_name" property="caseName" />
+		<result column="condition" property="condition" />
+		<result column="process" property="process" />
+		<result column="expect" property="expect" />
+		<result column="result" property="result" />
+		<result column="check_date" property="check_date" />
+		<result column="check_ver" property="check_ver" />
+		<result column="defect_no" property="defect_no" />
+		<result column="tester" property="tester" />
+		<result column="comment" property="comment" />
+	</resultMap>
+
+	<!-- テストケース1件登録 -->
+	<insert id="insertOne">
+		insert into t_testcase (
+			suite_id
+			, case_id
+			, case_name
+			, condition
+			, process
+			, expect
+			, result
+			, check_date
+			, check_ver
+			, defect_no
+			, tester
+			, comment
+		)
+		values (
+			#{suiteId}
+			, #{caseId}
+			, #{caseName}
+			, #{condition}
+			, #{process}
+			, #{expect}
+			, #{result}
+			, #{checkDate}
+			, #{checkVer}
+			, #{defectNo}
+			, #{tester}
+			, #{comment}
+		)
+		on
+			conflict on constraint t_testcase_suite_id_case_id_key
+		do update set
+			suite_id = #{suiteId}
+			, case_id = #{caseId}
+			, case_name = #{caseName}
+			, condition = #{condition}
+			, process = #{process}
+			, expect = #{expect}
+			, result = #{result}
+			, check_date = #{checkDate}
+			, check_ver = #{checkVer}
+			, defect_no = #{defectNo}
+			, tester = #{tester}
+			, comment = #{comment}
+	</insert>
+
+	<!-- テストケース複数件登録 -->
+	<insert id="insertBulk">
+		with
+		n(suite_id
+		  , case_id
+		  , case_name
+		  , condition
+		  , process
+		  , expect
+		  , result
+		  , check_date
+		  , check_ver
+		  , defect_no
+		  , tester
+		  , comment
+		) as (
+			values
+			<foreach collection="testcaseList" item="te" separator=",">
+			(
+			  #{te.suiteId}
+			  , #{te.caseId}
+			  , #{te.caseName}
+			  , #{te.condition}
+			  , #{te.process}
+			  , #{te.expect}
+			  , #{te.result}
+			  , cast(#{te.checkDate} as date)
+			  , #{te.checkVer}
+			  , #{te.defectNo}
+			  , #{te.tester}
+			  , #{te.comment}
+			)
+			</foreach>
+		),
+
+		upsert as (
+			update t_testcase tc
+			set
+			  suite_id = n.suite_id
+			  , case_id = n.case_id
+			  , case_name = n.case_name
+			  , condition = n.condition
+			  , process = n.process
+			  , expect = n.expect
+			  , result = n.result
+			  , check_date = n.check_date
+			  , check_ver = n.check_ver
+			  , defect_no = n.defect_no
+			  , tester = n.tester
+			  , comment = n.comment
+			from
+				n
+			where
+				tc.case_id = n.case_id
+			returning
+				tc.case_id
+		)
+
+		insert into t_testcase (
+		  suite_id
+		  , case_id
+		  , case_name
+		  , condition
+		  , process
+		  , expect
+		  , result
+		  , check_date
+		  , check_ver
+		  , defect_no
+		  , tester
+		  , comment
+		)
+		select
+			n.suite_id
+			, n.case_id
+			, n.case_name
+			, n.condition
+			, n.process
+			, n.expect
+			, n.result
+			, n.check_date
+			, n.check_ver
+			, n.defect_no
+			, n.tester
+			, n.comment
+		from
+			n
+		where
+			n.case_id not in (
+				select case_id from upsert
+			)
+	</insert>
+
+	<!-- テストケース複数件取得 -->
+	<select id="findBySuiteId" resultType="testcase">
+		select
+			*
+		from
+			t_testcase
+		where
+			suite_id = #{suiteId}
+		order by
+			case_id
+	</select>
+
+	<!-- テストケース複数件ID取得 -->
+	<select id="findCaseidBySuiteId" resultType="testcase">
+		select
+			case_id
+		from
+			t_testcase
+		where
+			suite_id = #{suiteId}
+	</select>
+
+	<!-- テストケース複数件削除 -->
+	<delete id="deleteById">
+		delete from
+			t_testcase
+		where
+			case_id in(
+				<foreach collection="deleteList" item="te" separator=",">
+				#{te.caseId}
+				</foreach>
+			)
+	</delete>
+
+	<!-- テストケース実行結果1件更新 -->
+	<update id="updateResultOne">
+		update t_testcase set
+			result = #{result}
+			, check_date = #{checkDate}
+			, check_ver = #{checkVer}
+			, defect_no = #{defectNo}
+			, tester = #{tester}
+			, comment = #{comment}
+		where
+			suite_id = #{suiteId}
+		and
+			case_id = #{caseId}
+	</update>
+
+	<!-- テストケース実行結果更新 -->
+	<update id="updateResultBulk">
+		update t_testcase set
+			result =
+					case case_id
+						<foreach collection="testcaseList" item="te" separator="">
+						  when #{te.caseId} then #{te.result}
+						</foreach>
+					end
+			, check_date =
+					case case_id
+						<foreach collection="testcaseList" item="te" separator="">
+						  when #{te.caseId} then cast(#{te.checkDate} as date)
+						</foreach>
+					end
+			, check_ver =
+					case case_id
+						<foreach collection="testcaseList" item="te" separator="">
+						  when #{te.caseId} then #{te.checkVer}
+						</foreach>
+					end
+			, defect_no =
+					case case_id
+						<foreach collection="testcaseList" item="te" separator="">
+						  when #{te.caseId} then #{te.defectNo}
+						</foreach>
+					end
+			, tester =
+					case case_id
+						<foreach collection="testcaseList" item="te" separator="">
+						  when #{te.caseId} then #{te.tester}
+						</foreach>
+					end
+			, comment =
+					case case_id
+						<foreach collection="testcaseList" item="te" separator="">
+						  when #{te.caseId} then #{te.comment}
+						</foreach>
+					end
+		where
+			suite_id = #{suiteId}
+		and
+			case_id in (
+				<foreach collection="testcaseList" item="te" separator=",">
+				  #{te.caseId}
+				</foreach>
+			)
+	</update>
+</mapper>

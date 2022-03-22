@@ -1,17 +1,19 @@
 package com.pepole.tesusaku.model;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
 public class Testcase {
-	private String suiteId;
-	private String caseId;
+	private int suiteId;
+	private int caseId;
 	private String caseName;
 	private String condition;
 	private String process;
 	private String expect;
-	private String result;
-	private String checkDate;
+	private int result;
+	private Date checkDate;
 	private String checkVer;
 	private String defectNo;
 	private String tester;

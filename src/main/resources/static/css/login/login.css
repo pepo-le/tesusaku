@@ -1,6 +1,41 @@
-.form-login {
+.login-wrap {
+	height: 100vh;
+	background-color: #fffffe;
+	color: #2b2c34;
+}
+
+.login-head {
+	text-align: center;
+	font-weight: bold;
+}
+
+.login-left {
+	margin-top: 15vh;
+}
+
+.login-right {
+	margin-top: 15vh;
+	text-align: center;
+}
+
+.login-title {
+	text-align: center;
+	display: block;
+}
+
+.login-form {
   width: 100%;
   max-width: 330px;
   padding: 15px;
   margin: auto;
+}
+
+.login-form__head {
+	margin-top: 3.2rem;
+	font-size: 1.4rem;
+}
+
+.hero {
+	max-width: 600px;
+	margin-left: -5vw;
 }

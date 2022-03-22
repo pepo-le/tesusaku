@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class AssignServiceImpl implements AssignService {
 	private final AssignMapper assignMapper;
 	
-	public List<String> getAssignedUsers(String suiteId) {
+	public List<String> getAssignedUsers(int suiteId) {
 		return assignMapper.findUserBySuiteid(suiteId);
 	}
 

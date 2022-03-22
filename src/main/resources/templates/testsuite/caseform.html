@@ -37,7 +37,7 @@
 				<tbody th:if="${cases.size() == 0}" id="testcase-form-body">
 					<tr th:object="${testcaseForm}">
 						<td></td>
-						<td><input class="testcase-form__id" type="text" name="caseId" th:value="1" /></td>
+						<td><input class="testcase-form__id" type="text" name="caseId" th:value="1" required /></td>
 						<td><textarea th:field="*{caseName}"></textarea></td>
 						<td><textarea th:field="*{condition}"></textarea></td>
 						<td><textarea th:field="*{process}"></textarea></td>
@@ -59,7 +59,7 @@
 					<tr th:each="testcase, stat : ${cases}">
 						<td th:if="${stat.index == 0}"></td>
 						<td th:if="${stat.index > 0}" th:text="－" class="e-delete-btn"></td>
-						<td><input class="testcase-form__id" type="text" name="caseId" th:value="${testcase.caseId}" /></td>
+						<td><input class="testcase-form__id" type="text" name="caseId" th:value="${testcase.caseId}" required /></td>
 						<td><textarea name="caseName" th:text="${testcase.caseName}"></textarea></td>
 						<td><textarea name="condition" th:text="${testcase.condition}"></textarea></td>
 						<td><textarea name="process" th:text="${testcase.process}"></textarea></td>
@@ -101,7 +101,7 @@
 				<tbody th:if="${cases.size() != 0}" id="testcase-form-body">
 					<tr th:each="testcase, stat : ${cases}">
 						<td class="testcase-form__immutable e-delete-btn"></td>
-						<td class="testcase-form__immutable"><input class="testcase-form__id testcase-form__input--disabled" type="text" name="caseId" th:value="${testcase.caseId}" /></td>
+						<td class="testcase-form__immutable"><input class="testcase-form__id testcase-form__input--disabled" type="text" name="caseId" th:value="${testcase.caseId}" required /></td>
 						<td class="testcase-form__immutable"><textarea name="caseName" th:text="${testcase.caseName}" disabled></textarea></td>
 						<td class="testcase-form__immutable"><textarea name="condition" th:text="${testcase.condition}" disabled></textarea></td>
 						<td class="testcase-form__immutable"><textarea name="process" th:text="${testcase.process}" disabled></textarea></td>
@@ -143,7 +143,7 @@
 				<tbody th:if="${cases.size() != 0}" id="testcase-form-body">
 					<tr th:each="testcase, stat : ${cases}">
 						<td class="testcase-form__immutable e-delete-btn"></td>
-						<td class="testcase-form__immutable"><input class="testcase-form__id testcase-form__input--disabled" type="text" name="caseId" th:value="${testcase.caseId}" /></td>
+						<td class="testcase-form__immutable"><input class="testcase-form__id testcase-form__input--disabled" type="text" name="caseId" th:value="${testcase.caseId}" required /></td>
 						<td class="testcase-form__immutable"><textarea name="caseName" th:text="${testcase.caseName}" disabled></textarea></td>
 						<td class="testcase-form__immutable"><textarea name="condition" th:text="${testcase.condition}" disabled></textarea></td>
 						<td class="testcase-form__immutable"><textarea name="process" th:text="${testcase.process}" disabled></textarea></td>

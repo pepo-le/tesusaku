@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.pepole.tesusaku.model.MUser;
 import com.pepole.tesusaku.repository.UserMapper;
@@ -55,7 +54,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /** ユーザー更新(1件) */
-    @Transactional
     @Override
     public void updateUserOne(String userId,
             String password,
@@ -65,9 +63,6 @@ public class UserServiceImpl implements UserService {
         String encryptPassword = passwordEncoder.encode(password);
 
         mapper.updateOne(userId, encryptPassword, userName);
-
-        // 例外を発生させる
-        // int i = 1 / 0;
     }
 
     /** ユーザー削除(1件) */
