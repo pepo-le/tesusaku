@@ -17,7 +17,7 @@
     <!-- ユーザーID -->
     <div class="form-group">
       <label for="userId" th:text="#{userId}"></label>
-      <input type="text" class="form-control" th:field="*{userId}" th:errorclass="is-invalid"/>
+      <input type="text" class="form-control" th:field="*{userId}" style="ime-mode:disabled;" th:errorclass="is-invalid"/>
       <div class="invalid-feedback" th:errors="*{userId}"></div>
     </div>
     <!-- パスワード -->
