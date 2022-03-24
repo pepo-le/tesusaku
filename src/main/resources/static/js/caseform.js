@@ -1,7 +1,7 @@
 var tesusaku = tesusaku || {};
 
 (function (global) {
-	tesusaku.form = document.getElementById('testcase-form-body'),
+	tesusaku.caseform = document.getElementById('testcase-form-body');
 
 	tesusaku.createInput = function (name, type) {
 		const input = document.createElement('input')
@@ -52,10 +52,8 @@ var tesusaku = tesusaku || {};
 		return td;
 	}
 
-	tesusaku.add_btn = document.getElementById('add-btn');
-
-	tesusaku.add_btn.addEventListener('click', function() {
-
+	tesusaku.addBtn = document.getElementById('add-btn');
+	tesusaku.addBtn.addEventListener('click', function() {
 		const delete_btn = tesusaku.createDeleteBtn();
 		const case_id = tesusaku.createInput('caseId', 'text');
 		case_id.setAttribute("pattern", "[0-9]{1,3}");
@@ -94,16 +92,15 @@ var tesusaku = tesusaku || {};
 		tr.appendChild(tesusaku.createTd(defect_no));
 		tr.appendChild(tesusaku.createTd(tester));
 		tr.appendChild(tesusaku.createTd(comment));
-		tesusaku.form.appendChild(tr);
+		tesusaku.caseform.appendChild(tr);
 
 		delete_btn.addEventListener('click', function(e) {
 			e.currentTarget.parentNode.remove();
 		})
 	});
 
-	tesusaku.e_del_btn = document.querySelectorAll('.e-delete-btn');
-
-	tesusaku.e_del_btn.forEach(function(item) {
+	tesusaku.eDelBtn = document.querySelectorAll('.e-delete-btn');
+	tesusaku.eDelBtn.forEach(function(item) {
 		item.addEventListener('click', function(e) {
 			e.currentTarget.parentNode.remove();
 		});
