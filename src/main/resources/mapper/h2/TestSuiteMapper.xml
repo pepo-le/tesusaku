@@ -6,6 +6,11 @@
 		<id column="suite_id" property="suiteId" />
 		<result column="suite_name" property="suiteName" />
 		<result column="admin_id" property="adminId" />
+		<collection property="assignUsers" resultMap="assign" columnPrefix="assign_" />
+	</resultMap>
+	
+	<resultMap type="String" id="assign">
+		<id column="user_id" property="userId" />
 	</resultMap>
 
 	<!-- テストスイート1件登録 -->
@@ -26,6 +31,25 @@
 			*
 		from
 			t_testsuite
+	</select>
+	
+	<!-- テストスイート1件取得 -->
+	<select id="findBySuiteidAndUserid" resultMap="testsuite">
+		select
+			t_testsuite.suite_id
+			, t_testsuite.suite_name
+			, t_testsuite.admin_id
+			, t_assign.user_id as assign_user_id
+		from
+			t_testsuite
+		left join
+			t_assign
+		on
+			t_testsuite.suite_id = t_assign.suite_id
+		where
+			t_testsuite.suite_id = #{suiteId}
+		and
+			t_testsuite.admin_id = #{userId}
 	</select>
 
 	<!-- テストスイート取得 -->
@@ -56,4 +80,24 @@
 			suite_id = #{suiteId}
 			, admin_id = #{userId}
 	</select>
+
+	<!-- テストスイート更新 -->
+	<update id="updateBySuiteid">
+		update
+			t_testsuite
+		set
+			suite_name = #{suiteName}
+		where
+			suite_id = #{suiteId}
+	</update>
+
+	<!-- テストスイート削除 -->
+	<delete id="deleteBySuiteidAndUserid">
+		delete from
+			t_testsuite
+		where
+			suite_id = #{suiteId}
+		and
+			admin_id = #{userId}
+	</delete>
 </mapper>

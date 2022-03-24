@@ -11,7 +11,13 @@ public interface TestsuiteService {
     
     /** テストスイート一覧取得 */
     public List<Testsuite> getSuiteList(String userId);
+    
+    /** テストスイート取得 */
+    public Testsuite getSuite(int suiteId, String userId);
 
-    /** テストスイート(+テストケース)取得 */
-    public List<Testsuite> getCaseList(String userId, Testsuite suite);
+    /** テストスイート更新 */
+    public void update(Testsuite suite, List<String> assignUsers);
+
+    /** テストスイート削除 */
+    public int deleteSuite(int suiteId, String userId);
 }

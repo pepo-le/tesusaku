@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS t_testsuite (
     suite_name VARCHAR(200) ,
     admin_id VARCHAR(50) ,
     PRIMARY KEY(suite_id) ,
-    FOREIGN KEY(admin_id) REFERENCES m_user(user_id)
+    FOREIGN KEY(admin_id) REFERENCES m_user(user_id) ON DELETE CASCADE 
 )
 ;
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS t_testcase (
     tester VARCHAR(100) ,
     comment VARCHAR(2000) ,
     PRIMARY KEY(suite_id, case_id) ,
-    FOREIGN KEY(suite_id) REFERENCES t_testsuite(suite_id)
+    FOREIGN KEY(suite_id) REFERENCES t_testsuite(suite_id) ON DELETE CASCADE
 )
 ;
 ALTER TABLE
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS t_assign (
     suite_id INT ,
     user_id VARCHAR(50) ,
     PRIMARY KEY(suite_id, user_id) ,
-    FOREIGN KEY(suite_id) REFERENCES t_testsuite(suite_id) ,
-    FOREIGN KEY(user_id) REFERENCES m_user(user_id)
+    FOREIGN KEY(suite_id) REFERENCES t_testsuite(suite_id) ON DELETE CASCADE,
+    FOREIGN KEY(user_id) REFERENCES m_user(user_id) ON DELETE CASCADE
 )
 ;

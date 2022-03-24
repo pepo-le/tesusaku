@@ -12,12 +12,18 @@ public interface TestsuiteMapper {
 	// 登録
 	public int insertOne(Testsuite suite);
 
-	// 取得
+	// 全取得
 	public List<Testsuite> findAll();
 
 	// 取得
 	public List<Testsuite> findByUser(String userId);
 
-	// 取得
-	public List<Testsuite> findByUserAndSuiteid(String userId);
+	// 1件取得
+	public Testsuite findBySuiteidAndUserid(int suiteId, String userId);
+
+	// 更新
+	public int updateBySuiteid(Testsuite suite);
+
+	// 削除
+	public int deleteBySuiteidAndUserid(int suiteId, String userId);
 }

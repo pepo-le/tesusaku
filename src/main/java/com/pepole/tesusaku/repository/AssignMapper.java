@@ -13,6 +13,9 @@ public interface AssignMapper {
 	// 複数登録
 	public int insertBulk(int suiteId, @Param("assignUsers") List<String> assignUsers);
 	
+	// 削除
+	public int deleteBySuiteid(int suiteId);
+
 	// 取得
 	public List<String> findUserBySuiteid(int suiteId);
 }

@@ -15,7 +15,10 @@
     <div class="mt-5">
       <h2 class="h2 header border-bottom">テストスイート一覧</h2>
       <ul class="list-group" th:each="item: ${testsuites}">
-      	<li class="list-group-item"><a th:href="@{/testsuite/} + ${item.suiteId}" th:text="${item.suiteName}"></a></li>
+      	<li class="list-group-item py-2">
+      		<a class="align-middle" th:href="@{/testsuite/} + ${item.suiteId}" th:text="${item.suiteName}"></a>      	
+      		<a class="btn btn-primary btn-sm pull-right" th:href="@{/testsuite/edit/} + ${item.suiteId}" th:text="編集"></a>      	
+      	</li>
       </ul>
     </div>
   </div>

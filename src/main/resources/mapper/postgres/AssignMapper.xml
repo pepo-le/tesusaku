@@ -31,7 +31,7 @@
 			)
 			</foreach>
 	</insert>
-	
+
 	<select id="findUserBySuiteid" resultType="String">
 		select
 			user_id
@@ -40,4 +40,11 @@
 		where
 			suite_id = #{suiteId}
 	</select>
+	
+	<delete id="deleteBySuiteid">
+		delete from
+			t_assign
+		where
+			suite_id = #{suiteId}
+	</delete>
 </mapper>
