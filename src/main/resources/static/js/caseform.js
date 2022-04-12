@@ -54,55 +54,111 @@ var tesusaku = tesusaku || {};
 
 	tesusaku.addBtn = document.getElementById('add-btn');
 	tesusaku.addBtn.addEventListener('click', function() {
-		const delete_btn = tesusaku.createDeleteBtn();
-		const case_id = tesusaku.createInput('caseId', 'text');
-		case_id.setAttribute("pattern", "[0-9]{1,3}");
-		case_id.setAttribute("style", "ime-mode:disabled;");
-		case_id.setAttribute("required", "true");
-		const case_name = tesusaku.createTextarea('caseName');
+		const deleteBtn = tesusaku.createDeleteBtn();
+		const caseId = tesusaku.createInput('caseId', 'text');
+		caseId.setAttribute("pattern", "[0-9]{1,3}");
+		caseId.setAttribute("style", "ime-mode:disabled;");
+		caseId.setAttribute("required", "true");
+		const caseName = tesusaku.createTextarea('caseName');
 		const condition = tesusaku.createTextarea('condition');
 		const process = tesusaku.createTextarea('process');
 		const expect = tesusaku.createTextarea('expect');
-		const check_date = tesusaku.createInput('checkDate', 'date');
-		const check_ver = tesusaku.createInput('checkVer', 'text');
-		const defect_no = tesusaku.createInput('defectNo', 'text');
+		const checkDate = tesusaku.createInput('checkDate', 'date');
+		const checkVer = tesusaku.createInput('checkVer', 'text');
+		const defectNo = tesusaku.createInput('defectNo', 'text');
 		const tester = tesusaku.createInput('tester', 'text');
 		const comment = tesusaku.createTextarea('comment');
 
 		const RESULTS = ['', 'OK', 'NG', 'skip', 'pending', 'N/A'];
 		const result = tesusaku.createSelect(RESULTS) ;
 
-		case_id.classList.add('testcase-form__id');
+		caseId.classList.add('testcase-form__id');
 		result.classList.add('testcase-form__result');
-		check_date.classList.add('testcase-form__input-text');
-		check_ver.classList.add('testcase-form__input-text');
-		defect_no.classList.add('testcase-form__input-text');
+		checkDate.classList.add('testcase-form__input-text');
+		checkVer.classList.add('testcase-form__input-text');
+		defectNo.classList.add('testcase-form__input-text');
 		tester.classList.add('testcase-form__input-text');
 
 		const tr = document.createElement('tr');
-		tr.appendChild(delete_btn);
-		tr.appendChild(tesusaku.createTd(case_id));
-		tr.appendChild(tesusaku.createTd(case_name));
+		tr.appendChild(deleteBtn);
+		tr.appendChild(tesusaku.createTd(caseId));
+		tr.appendChild(tesusaku.createTd(caseName));
 		tr.appendChild(tesusaku.createTd(condition));
 		tr.appendChild(tesusaku.createTd(process));
 		tr.appendChild(tesusaku.createTd(expect));
 		tr.appendChild(tesusaku.createTd(result));
-		tr.appendChild(tesusaku.createTd(check_date));
-		tr.appendChild(tesusaku.createTd(check_ver));
-		tr.appendChild(tesusaku.createTd(defect_no));
+		tr.appendChild(tesusaku.createTd(checkDate));
+		tr.appendChild(tesusaku.createTd(checkVer));
+		tr.appendChild(tesusaku.createTd(defectNo));
 		tr.appendChild(tesusaku.createTd(tester));
 		tr.appendChild(tesusaku.createTd(comment));
 		tesusaku.caseform.appendChild(tr);
 
-		delete_btn.addEventListener('click', function(e) {
+		deleteBtn.addEventListener('click', function(e) {
 			e.currentTarget.parentNode.remove();
 		})
+
+		Array.from(tr.children).forEach(function(e) {
+			// 削除ボタンのセルは子要素なし
+			if (e.childElementCount == 0) return;
+
+			e.addEventListener('input', function () {
+				tesusaku.adjustHeight(tr);			
+			});
+		});
 	});
 
+	// 1行削除
 	tesusaku.eDelBtn = document.querySelectorAll('.e-delete-btn');
 	tesusaku.eDelBtn.forEach(function(item) {
 		item.addEventListener('click', function(e) {
 			e.currentTarget.parentNode.remove();
 		});
 	});
+	
+	// textareaの高さ調整	
+	tesusaku.adjustHeight = function (testcase) {
+		//let maxHeight = 0;
+		let maxLines = 0;
+		let maxLineHeight = 0;
+		Array.from(testcase.children).forEach(function (t) {
+			// 削除ボタンのセルは子要素なし
+			if (t.childElementCount == 0) return;
+
+			const childNode = t.children[0]
+
+			// c -> textarea, input の入れ子になっている
+			const lines = (childNode.value + '\n').match(/\n/g).length
+			if (lines > maxLines) maxLines = lines;
+			//if (t.children[0].scrollHeight >= maxHeight) maxHeight = t.children[0].scrollHeight;
+			
+			if (childNode.nodeName == 'TEXTAREA') {
+				//const fontSize = window.getComputedStyle(childNode).getPropertyValue('lineHeight').replace('px', '');
+				const lineHeight = window.getComputedStyle(childNode).lineHeight.replace(/[^-\d\.]/g, '');
+				if (lineHeight > maxLineHeight) maxLineHeight = lineHeight;
+			}
+		})
+		
+		Array.from(testcase.children).forEach(function (t) {
+			// 削除ボタンのセルは子要素なし
+			if (t.childElementCount == 0) return;
+
+			t.children[0].style.height = maxLines * maxLineHeight + 'px';
+		});
+	}
+	
+	tesusaku.textAreas = document.querySelectorAll('.testcase-form__textarea');
+	tesusaku.textAreas.forEach(function(e) {
+		e.addEventListener('input', function () {
+			// tr -> td -> textarea の入れ子になっている
+			tesusaku.adjustHeight(e.parentElement.parentElement);			
+		});
+	});
+	
+	window.onload = function() { 
+		tesusaku.textAreas.forEach(function(e) {
+			// tr -> td -> textarea の入れ子になっている
+			tesusaku.adjustHeight(e.parentElement.parentElement);
+		});
+	}
 }(this));
