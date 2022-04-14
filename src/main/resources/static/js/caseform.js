@@ -118,24 +118,20 @@ var tesusaku = tesusaku || {};
 	
 	// textareaの高さ調整	
 	tesusaku.adjustHeight = function (testcase) {
-		//let maxHeight = 0;
-		let maxLines = 0;
-		let maxLineHeight = 0;
+		let maxHeight = 0;
+
 		Array.from(testcase.children).forEach(function (t) {
 			// 削除ボタンのセルは子要素なし
 			if (t.childElementCount == 0) return;
 
-			const childNode = t.children[0]
+			// t -> textarea, input の入れ子になっている
+			const childNode = t.children[0];
 
-			// c -> textarea, input の入れ子になっている
-			const lines = (childNode.value + '\n').match(/\n/g).length
-			if (lines > maxLines) maxLines = lines;
-			//if (t.children[0].scrollHeight >= maxHeight) maxHeight = t.children[0].scrollHeight;
-			
-			if (childNode.nodeName == 'TEXTAREA') {
-				//const fontSize = window.getComputedStyle(childNode).getPropertyValue('lineHeight').replace('px', '');
-				const lineHeight = window.getComputedStyle(childNode).lineHeight.replace(/[^-\d\.]/g, '');
-				if (lineHeight > maxLineHeight) maxLineHeight = lineHeight;
+			// textarea本来の高さを得るため
+			childNode.style.height = 'auto';
+
+			if (childNode.nodeName == 'TEXTAREA' && childNode.scrollHeight > maxHeight) {
+				maxHeight = childNode.scrollHeight;
 			}
 		})
 		
@@ -143,7 +139,10 @@ var tesusaku = tesusaku || {};
 			// 削除ボタンのセルは子要素なし
 			if (t.childElementCount == 0) return;
 
-			t.children[0].style.height = maxLines * maxLineHeight + 'px';
+			// t -> textarea, input の入れ子になっている
+			const childNode = t.children[0];
+
+			childNode.style.height = maxHeight + 'px';
 		});
 	}
 	
