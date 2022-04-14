@@ -29,8 +29,11 @@ public class TestcaseServiceImpl implements TestcaseService {
     	 */
 
 		if (testcaseForm.getCaseId().length == 1) {
+			// テストケースを削除
+			mapper.deleteBySuiteId(suiteId);
+
+			// 登録
 			Testcase testcase = new Testcase();
-			
 			testcase.setSuiteId(suiteId);
 			testcase.setCaseId(Integer.parseInt(testcaseForm.getCaseId()[0]));
 			testcase.setCaseName(testcaseForm.getCaseName().length == 1 ? testcaseForm.getCaseName()[0] : "");
@@ -44,7 +47,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 			testcase.setTester(testcaseForm.getTester().length == 1 ? testcaseForm.getTester()[0] : "");
 			testcase.setComment(testcaseForm.getComment().length == 1 ? testcaseForm.getComment()[0] : "");
 
-			mapper.insertOne(testcase);
+			mapper.upsertOne(testcase);
 		} else {
 			// フォーム上にないテストケースを削除
 			List<Testcase> existingList = mapper.findCaseidBySuiteId(suiteId);
@@ -86,7 +89,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 				testcaseList.add(testcase);
 			}
 
-			mapper.insertBulk(testcaseList);
+			mapper.upsertBulk(testcaseList);
 		}
 	}
 	

@@ -18,7 +18,7 @@
 	</resultMap>
 
 	<!-- テストケース1件登録 -->
-	<insert id="insertOne">
+	<insert id="upsertOne">
 		insert into t_testcase (
 			suite_id
 			, case_id
@@ -65,7 +65,7 @@
 	</insert>
 
 	<!-- テストケース複数件登録 -->
-	<insert id="insertBulk">
+	<insert id="upsertBulk">
 		with
 		n(suite_id
 		  , case_id
@@ -191,6 +191,14 @@
 				#{te.caseId}
 				</foreach>
 			)
+	</delete>
+	
+	<!-- テストケース複数件削除 -->
+	<delete id="deleteBySuiteId">
+		delete from
+			t_testcase
+		where
+			suite_id = #{suiteId}
 	</delete>
 
 	<!-- テストケース実行結果1件更新 -->
