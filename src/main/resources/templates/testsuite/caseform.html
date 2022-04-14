@@ -38,20 +38,20 @@
 					<tr th:object="${testcaseForm}">
 						<td></td>
 						<td><input class="testcase-form__id" type="text" name="caseId" th:value="1" pattern="[0-9]{1,3}" style="ime-mode:disabled;" required /></td>
-						<td><textarea class="testcase-form__textarea" th:field="*{caseName}"></textarea></td>
-						<td><textarea class="testcase-form__textarea" th:field="*{condition}"></textarea></td>
-						<td><textarea class="testcase-form__textarea" th:field="*{process}"></textarea></td>
-						<td><textarea class="testcase-form__textarea" th:field="*{expect}"></textarea></td>
+						<td><textarea class="testcase-form__textarea" th:field="*{caseName}" maxlength="50"></textarea></td>
+						<td><textarea class="testcase-form__textarea" th:field="*{condition}" maxlength="1000"></textarea></td>
+						<td><textarea class="testcase-form__textarea" th:field="*{process}" maxlength="2000"></textarea></td>
+						<td><textarea class="testcase-form__textarea" th:field="*{expect}" maxlength="1000"></textarea></td>
 						<td>
 							<select class="testcase-form__result" th:field="*{result}">
 								<option th:each="result : ${resultMap}" th:value="${result.key}" th:text="${result.value}"></option>
 							</select>
 						</td>
 						<td><input class="testcase-form__input-text" type="date" th:field="*{checkDate}" /></td>
-						<td><input class="testcase-form__input-text" type="text" th:field="*{checkVer}" /></td>
-						<td><input class="testcase-form__input-text" type="text" th:field="*{defectNo}" /></td>
-						<td><input class="testcase-form__input-text" type="text" th:field="*{tester}" /></td>
-						<td><textarea class="testcase-form__textarea" th:field="*{comment}"></textarea></td>
+						<td><input class="testcase-form__input-text" type="text" th:field="*{checkVer}" maxlength="100" /></td>
+						<td><input class="testcase-form__input-text" type="text" th:field="*{defectNo}" maxlength="100" /></td>
+						<td><input class="testcase-form__input-text" type="text" th:field="*{tester}" maxlength="100" /></td>
+						<td><textarea class="testcase-form__textarea" th:field="*{comment}" maxlength="2000"></textarea></td>
 					</tr>
 				</tbody>
 
@@ -60,10 +60,10 @@
 						<td th:if="${stat.index == 0}"></td>
 						<td th:if="${stat.index > 0}" th:text="－" class="e-delete-btn"></td>
 						<td><input class="testcase-form__id" type="text" name="caseId" th:value="${testcase.caseId}" pattern="[0-9]{1,3}" style="ime-mode:disabled;" required /></td>
-						<td><textarea class="testcase-form__textarea" name="caseName" th:text="${testcase.caseName}"></textarea></td>
-						<td><textarea class="testcase-form__textarea" name="condition" th:text="${testcase.condition}"></textarea></td>
-						<td><textarea class="testcase-form__textarea" name="process" th:text="${testcase.process}"></textarea></td>
-						<td><textarea class="testcase-form__textarea" name="expect" th:text="${testcase.expect}"></textarea></td>
+						<td><textarea class="testcase-form__textarea" name="caseName" th:text="${testcase.caseName}" maxlength="50"></textarea></td>
+						<td><textarea class="testcase-form__textarea" name="condition" th:text="${testcase.condition}" maxlength="1000"></textarea></td>
+						<td><textarea class="testcase-form__textarea" name="process" th:text="${testcase.process}" maxlength="2000"></textarea></td>
+						<td><textarea class="testcase-form__textarea" name="expect" th:text="${testcase.expect}" maxlength="1000"></textarea></td>
 						<td>
 							<select class="testcase-form__result" name="result">
 								<option th:each="result : ${resultMap}" th:value="${result.key}"
@@ -72,10 +72,10 @@
 						</td>
 						<td th:if="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
 						<td th:unless="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate.toString()}" /></td>
-						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" /></td>
-						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" /></td>
-						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
-						<td><textarea class="testcase-form__textarea" name="comment" th:text="${testcase.comment}"></textarea></td>
+						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" maxlength="100" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" maxlength="100" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" maxlength="100" /></td>
+						<td><textarea class="testcase-form__textarea" name="comment" th:text="${testcase.comment}" maxlength="2000"></textarea></td>
 					</tr>
 				</tbody>
 			</table>
@@ -114,10 +114,10 @@
 						</td>
 						<td th:if="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" /></td>
 						<td th:unless="${testcase.checkDate.toString() == '9999-12-31'}"><input class="testcase-form__input-text" type="date" name="checkDate" th:value="${testcase.checkDate.toString()}" /></td>
-						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" /></td>
-						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" /></td>
-						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" /></td>
-						<td><textarea class="testcase-form__textarea" name="comment" th:text="${testcase.comment}"></textarea></td>
+						<td><input class="testcase-form__input-text" type="text" name="checkVer" th:value="${testcase.checkVer}" maxlength="100" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="defectNo" th:value="${testcase.defectNo}" maxlength="100" /></td>
+						<td><input class="testcase-form__input-text" type="text" name="tester" th:value="${testcase.tester}" maxlength="100" /></td>
+						<td><textarea class="testcase-form__textarea" name="comment" th:text="${testcase.comment}" maxlength="2000"></textarea></td>
 					</tr>
 				</tbody>
 			</table>
