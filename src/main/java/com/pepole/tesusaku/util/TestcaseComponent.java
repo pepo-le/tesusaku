@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component
 public class TestcaseComponent {
-    /** 結果のMapを生成する */
-    public Map<Integer, String> getResultMap() {
-        Map<Integer, String> resultMap = new LinkedHashMap<>();
+	/** 結果のMapを生成する */
+	public Map<Integer, String> getResultMap() {
+		Map<Integer, String> resultMap = new LinkedHashMap<>();
 		resultMap.put(0, "");
 		resultMap.put(1, "OK");
 		resultMap.put(2, "NG");
@@ -21,5 +21,5 @@ public class TestcaseComponent {
 		resultMap.put(4, "pending");
 		resultMap.put(5, "N/A");
 		return Collections.unmodifiableMap(resultMap);
-    }
+	}
 }

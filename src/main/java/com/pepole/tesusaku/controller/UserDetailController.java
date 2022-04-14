@@ -21,42 +21,42 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserDetailController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    private final ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 
-    /** ユーザー詳細画面を表示 */
-    @GetMapping("/detail/{userId:.+}")
-    public String getUser(UserDetailForm form, Model model, @PathVariable("userId") String userId) {
-        MUser user = userService.getUserOne(userId);
-        user.setPassword(null);
+	/** ユーザー詳細画面を表示 */
+	@GetMapping("/detail/{userId:.+}")
+	public String getUser(UserDetailForm form, Model model, @PathVariable("userId") String userId) {
+		MUser user = userService.getUserOne(userId);
+		user.setPassword(null);
 
-        form = modelMapper.map(user, UserDetailForm.class);
+		form = modelMapper.map(user, UserDetailForm.class);
 
-        model.addAttribute("userDetailForm", form);
+		model.addAttribute("userDetailForm", form);
 
-        // ユーザー詳細画面を表示
-        return "user/detail";
-    }
+		// ユーザー詳細画面を表示
+		return "user/detail";
+	}
 
-    /** ユーザー更新処理 */
-    @PostMapping(value = "/detail", params = "update")
-    public String updateUser(UserDetailForm form, Model model) {
-        try {
-            userService.updateUserOne(form.getUserId(),
-                    form.getPassword(),
-                    form.getUserName());
-        } catch (Exception e) {
-            log.error("ユーザー更新でエラー", e);
-        }
-        return "redirect:/user/list";
-    }
+	/** ユーザー更新処理 */
+	@PostMapping(value = "/detail", params = "update")
+	public String updateUser(UserDetailForm form, Model model) {
+		try {
+			userService.updateUserOne(form.getUserId(),
+					form.getPassword(),
+					form.getUserName());
+		} catch (Exception e) {
+			log.error("ユーザー更新でエラー", e);
+		}
+		return "redirect:/user/list";
+	}
 
-    /** ユーザー削除処理 */
-    @PostMapping(value = "/detail", params = "delete")
-    public String deleteUser(UserDetailForm form, Model model) {
-        userService.deleteUserOne(form.getUserId());
+	/** ユーザー削除処理 */
+	@PostMapping(value = "/detail", params = "delete")
+	public String deleteUser(UserDetailForm form, Model model) {
+		userService.deleteUserOne(form.getUserId());
 
-        return "redirect:/user/list";
-    }
+		return "redirect:/user/list";
+	}
 }

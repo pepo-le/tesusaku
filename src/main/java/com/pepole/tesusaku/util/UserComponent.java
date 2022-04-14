@@ -15,13 +15,13 @@ import lombok.RequiredArgsConstructor;
 public class UserComponent {
 	private final MessageSource messageSource;
 
-    /** ロールのMapを生成する */
-    public Map<String, String> getRoleMap(Locale locale) {
-        Map<String, String> roleMap = new LinkedHashMap<>();
-        String admin = messageSource.getMessage("admin", null, locale);
-        String tester = messageSource.getMessage("tester", null, locale);
-        roleMap.put(admin, "ROLE_ADMIN");
-        roleMap.put(tester, "ROLE_TESTER");
-        return Collections.unmodifiableMap(roleMap);
-    }
+	/** ロールのMapを生成する */
+	public Map<String, String> getRoleMap(Locale locale) {
+		Map<String, String> roleMap = new LinkedHashMap<>();
+		String admin = messageSource.getMessage("admin", null, locale);
+		String tester = messageSource.getMessage("tester", null, locale);
+		roleMap.put(admin, "ROLE_ADMIN");
+		roleMap.put(tester, "ROLE_TESTER");
+		return Collections.unmodifiableMap(roleMap);
+	}
 }

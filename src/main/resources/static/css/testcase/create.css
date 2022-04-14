@@ -28,13 +28,13 @@
 	width: 10rem;
 	height: 6.4rem;
 	min-height: 6.4rem;
-    border: none;
-    border-radius: 0;
-    padding: 0;
-    outline: none;
+	border: none;
+	border-radius: 0;
+	padding: 0;
+	outline: none;
 	font-size: 0.7rem;	
-    background: none;
-    resize: none;
+	background: none;
+	resize: none;
 }
 
 .testcase-form__table {
@@ -57,7 +57,7 @@
 	height: 6.4rem;
 	min-height: 6.4rem;
 	width: 2.4rem;
-    border: none;
+	border: none;
 }
 
 .testcase-form__result {
@@ -70,11 +70,11 @@
 	width: 10rem;
 	height: 6.4rem;
 	min-height: 6.4rem;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    outline: none;
-    background: none;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	outline: none;
+	background: none;
 }
 
 .testcase-form__delete {

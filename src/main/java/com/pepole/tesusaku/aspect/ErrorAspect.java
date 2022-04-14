@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ErrorAspect {
 
-    @AfterThrowing(value = "execution(* *..*..*(..)) &&"
-            + "(bean(*Controller) || bean(*Service) || bean(*Repository))",
-            throwing = "ex")
-    public void throwingNull(DataAccessException ex) {
-        // 例外処理の内容（ログ出力）
-        log.error("DataAccessExceptionが発生しました");
-    }
+	@AfterThrowing(value = "execution(* *..*..*(..)) &&"
+			+ "(bean(*Controller) || bean(*Service) || bean(*Repository))",
+			throwing = "ex")
+	public void throwingNull(DataAccessException ex) {
+		// 例外処理の内容（ログ出力）
+		log.error("DataAccessExceptionが発生しました");
+	}
 }

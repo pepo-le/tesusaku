@@ -22,11 +22,11 @@ public class TestcaseServiceImpl implements TestcaseService {
 	
 	@Transactional
 	@Override
-    public void updateCases(TestcaseForm testcaseForm, int suiteId) {
-    	/**
-    	 * フォームデータの形式
-    	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
-    	 */
+	public void updateCases(TestcaseForm testcaseForm, int suiteId) {
+		/**
+		 * フォームデータの形式
+		 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
+		 */
 
 		if (testcaseForm.getCaseId().length == 1) {
 			// テストケースを削除
@@ -94,11 +94,11 @@ public class TestcaseServiceImpl implements TestcaseService {
 	}
 	
 	@Override
-    public void updateResult(TestcaseForm testcaseForm, int suiteId) {
-    	/**
-    	 * フォームデータの形式
-    	 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
-    	 */
+	public void updateResult(TestcaseForm testcaseForm, int suiteId) {
+		/**
+		 * フォームデータの形式
+		 * 各項目がそれぞれ配列で格納されているのでテストケースに直でマッピングできない
+		 */
 
 		if (testcaseForm.getCaseId().length == 1) {
 			Testcase testcase = new Testcase();
@@ -138,15 +138,15 @@ public class TestcaseServiceImpl implements TestcaseService {
 		}
 	}
 
-    /** テストケース取得 */
-    @Override
-    public List<Testcase> getBySuiteId(int suiteId) {
-    	return mapper.findBySuiteId(suiteId);
-    }
+	/** テストケース取得 */
+	@Override
+	public List<Testcase> getBySuiteId(int suiteId) {
+		return mapper.findBySuiteId(suiteId);
+	}
 
-    /** テストケースID取得 */
-    @Override
-    public List<Testcase> getCaseidBySuiteId(int suiteId) {
-    	return mapper.findCaseidBySuiteId(suiteId);
-    }
+	/** テストケースID取得 */
+	@Override
+	public List<Testcase> getCaseidBySuiteId(int suiteId) {
+		return mapper.findCaseidBySuiteId(suiteId);
+	}
 }

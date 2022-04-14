@@ -24,47 +24,47 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class UserController {
 
-    private final UserService userService;
-    
-    private final TestsuiteService testsuiteService;
+	private final UserService userService;
+	
+	private final TestsuiteService testsuiteService;
 
-    private final ModelMapper modelMapper;
-    
-    private final HttpServletRequest httpServletRequest;
+	private final ModelMapper modelMapper;
+	
+	private final HttpServletRequest httpServletRequest;
 
-    /** ユーザー画面を表示 */
-    @GetMapping("/user")
-    public String index(Model model, Authentication loginUser) {
-    	List<Testsuite> suites = testsuiteService.getSuiteList(loginUser.getName());
-    	
-        model.addAttribute("testsuites", suites);
+	/** ユーザー画面を表示 */
+	@GetMapping("/user")
+	public String index(Model model, Authentication loginUser) {
+		List<Testsuite> suites = testsuiteService.getSuiteList(loginUser.getName());
+		
+		model.addAttribute("testsuites", suites);
 
-    	model.addAttribute("requestUri", httpServletRequest.getRequestURI());
+		model.addAttribute("requestUri", httpServletRequest.getRequestURI());
 
-        return "user/index";
-    }
+		return "user/index";
+	}
 
-    /** ユーザー一覧画面を表示 */
-    @GetMapping("/user/list")
-    public String getUserList(@ModelAttribute UserListForm form, Model model) {
-        MUser user = modelMapper.map(form, MUser.class);
+	/** ユーザー一覧画面を表示 */
+	@GetMapping("/user/list")
+	public String getUserList(@ModelAttribute UserListForm form, Model model) {
+		MUser user = modelMapper.map(form, MUser.class);
 
-        List<MUser> userList = userService.getUsers(user);
+		List<MUser> userList = userService.getUsers(user);
 
-        model.addAttribute("userList", userList);
+		model.addAttribute("userList", userList);
 
-        return "user/list";
-    }
+		return "user/list";
+	}
 
-    /** ユーザー検索処理 */
-    @PostMapping("/user/list")
-    public String postUserList(@ModelAttribute UserListForm form, Model model) {
-        MUser user = modelMapper.map(form, MUser.class);
+	/** ユーザー検索処理 */
+	@PostMapping("/user/list")
+	public String postUserList(@ModelAttribute UserListForm form, Model model) {
+		MUser user = modelMapper.map(form, MUser.class);
 
-        List<MUser> userList = userService.getUsers(user);
+		List<MUser> userList = userService.getUsers(user);
 
-        model.addAttribute("userList", userList);
+		model.addAttribute("userList", userList);
 
-        return "user/list";
-    }
+		return "user/list";
+	}
 }

@@ -20,43 +20,43 @@ public class TestsuiteServiceImpl implements TestsuiteService {
 	
 	private final AssignMapper assignMapper;
 
-    /** テストスイート作成 */
+	/** テストスイート作成 */
 	@Transactional
-    @Override
-    public void create(Testsuite suite, List<String> assignUsers) {
-        testsuiteMapperr.insertOne(suite);
+	@Override
+	public void create(Testsuite suite, List<String> assignUsers) {
+		testsuiteMapperr.insertOne(suite);
 
-        assignUsers.add(suite.getAdminId());
-        assignMapper.insertBulk(suite.getSuiteId(), assignUsers);
-    }
-    
-    /** テストスイート一覧取得 */
-    @Override
-    public List<Testsuite> getSuiteList(String userId) {
-        return testsuiteMapperr.findByUser(userId);
-    }
+		assignUsers.add(suite.getAdminId());
+		assignMapper.insertBulk(suite.getSuiteId(), assignUsers);
+	}
+	
+	/** テストスイート一覧取得 */
+	@Override
+	public List<Testsuite> getSuiteList(String userId) {
+		return testsuiteMapperr.findByUser(userId);
+	}
 
-    /** テストスイート取得 */
-    @Override
-    public Testsuite getSuite(int suiteId, String userId) {
-        return testsuiteMapperr.findBySuiteidAndUserid(suiteId, userId);
+	/** テストスイート取得 */
+	@Override
+	public Testsuite getSuite(int suiteId, String userId) {
+		return testsuiteMapperr.findBySuiteidAndUserid(suiteId, userId);
 
-    }
+	}
 
-    /** テストスイート更新 */
+	/** テストスイート更新 */
 	@Transactional
-    @Override
-    public void update(Testsuite suite, List<String> assignUsers) {
-        testsuiteMapperr.updateBySuiteid(suite);
+	@Override
+	public void update(Testsuite suite, List<String> assignUsers) {
+		testsuiteMapperr.updateBySuiteid(suite);
 
-        assignUsers.add(suite.getAdminId());
-        
-        assignMapper.deleteBySuiteid(suite.getSuiteId());
-        assignMapper.insertBulk(suite.getSuiteId(), assignUsers);
-    }
+		assignUsers.add(suite.getAdminId());
+		
+		assignMapper.deleteBySuiteid(suite.getSuiteId());
+		assignMapper.insertBulk(suite.getSuiteId(), assignUsers);
+	}
 
-    /** テストスイート削除 */
-    public int deleteSuite(int suiteId, String userId) {
-    	return testsuiteMapperr.deleteBySuiteidAndUserid(suiteId, userId);
-    }
+	/** テストスイート削除 */
+	public int deleteSuite(int suiteId, String userId) {
+		return testsuiteMapperr.deleteBySuiteidAndUserid(suiteId, userId);
+	}
 }

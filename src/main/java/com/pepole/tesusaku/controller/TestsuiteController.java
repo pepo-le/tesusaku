@@ -59,7 +59,7 @@ public class TestsuiteController {
 		List<MUser> users = userService.getOthers(loginUser.getName());
 		model.addAttribute("users", users);
 
-    	model.addAttribute("requestUri", httpServletRequest.getRequestURI());
+		model.addAttribute("requestUri", httpServletRequest.getRequestURI());
 		
 		return "testsuite/create";
 	}
@@ -70,17 +70,17 @@ public class TestsuiteController {
 			BindingResult bindingResult,
 			Authentication loginUser) {
 
-        if (bindingResult.hasErrors()) {
-            return getCreateForm(model, testsuiteForm, loginUser);
-        }
+		if (bindingResult.hasErrors()) {
+			return getCreateForm(model, testsuiteForm, loginUser);
+		}
 
-        Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
-        suite.setAdminId(loginUser.getName());
-        
-        Optional<List<String>> optionalUsers = Optional.ofNullable(testsuiteForm.getAssignUsers());
-        List<String> assignUsers = optionalUsers.orElse(new ArrayList<String>());
-        
-        testsuiteService.create(suite, assignUsers);
+		Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
+		suite.setAdminId(loginUser.getName());
+		
+		Optional<List<String>> optionalUsers = Optional.ofNullable(testsuiteForm.getAssignUsers());
+		List<String> assignUsers = optionalUsers.orElse(new ArrayList<String>());
+		
+		testsuiteService.create(suite, assignUsers);
 
 		return "redirect:/user";
 	}
@@ -88,11 +88,11 @@ public class TestsuiteController {
 	@GetMapping("/testsuite")
 	public String getSuiteList(Model model, @ModelAttribute TestsuiteForm testsuiteForm,
 			Authentication loginUser) {
-    	
-    	List<Testsuite> suites = testsuiteService.getSuiteList(loginUser.getName());
-        model.addAttribute("testsuites", suites);
 		
-    	model.addAttribute("requestUri", httpServletRequest.getRequestURI());
+		List<Testsuite> suites = testsuiteService.getSuiteList(loginUser.getName());
+		model.addAttribute("testsuites", suites);
+		
+		model.addAttribute("requestUri", httpServletRequest.getRequestURI());
 
 		return "testsuite/list";
 	}
@@ -100,13 +100,13 @@ public class TestsuiteController {
 	@GetMapping("/testsuite/{suiteId}")
 	public String getSuite(@PathVariable int suiteId, Model model, @ModelAttribute TestcaseForm testcaseForm,
 			Authentication loginUser) {
-        model.addAttribute("suiteId", suiteId);
+		model.addAttribute("suiteId", suiteId);
 
 		Map<Integer, String> resultMap = testcaseComponent.getResultMap();
 		model.addAttribute("resultMap", resultMap);
-        
-        List<Testcase> cases = testcaseService.getBySuiteId(suiteId);
-        model.addAttribute("cases", cases);
+		
+		List<Testcase> cases = testcaseService.getBySuiteId(suiteId);
+		model.addAttribute("cases", cases);
 
 		model.addAttribute("isAssigned", isAssigned(suiteId, loginUser.getName()));
 		
@@ -138,7 +138,7 @@ public class TestsuiteController {
 			@PathVariable int suiteId,
 			Authentication loginUser) {
 
-        model.addAttribute("suiteId", suiteId);
+		model.addAttribute("suiteId", suiteId);
 
 		Testsuite suite = testsuiteService.getSuite(suiteId, loginUser.getName());
 		TestsuiteForm form = modelMapper.map(suite, TestsuiteForm.class);
@@ -158,18 +158,18 @@ public class TestsuiteController {
 			@PathVariable int suiteId,
 			Authentication loginUser) {
 
-        if (bindingResult.hasErrors()) {
-            return getEditForm(model, testsuiteForm, suiteId, loginUser);
-        }
+		if (bindingResult.hasErrors()) {
+			return getEditForm(model, testsuiteForm, suiteId, loginUser);
+		}
 
-        Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
-        suite.setSuiteId(suiteId);
-        suite.setAdminId(loginUser.getName());
-        
-        Optional<List<String>> optionalUsers = Optional.ofNullable(testsuiteForm.getAssignUsers());
-        List<String> assignUsers = optionalUsers.orElse(new ArrayList<String>());
-        
-        testsuiteService.update(suite, assignUsers);
+		Testsuite suite = modelMapper.map(testsuiteForm, Testsuite.class);
+		suite.setSuiteId(suiteId);
+		suite.setAdminId(loginUser.getName());
+		
+		Optional<List<String>> optionalUsers = Optional.ofNullable(testsuiteForm.getAssignUsers());
+		List<String> assignUsers = optionalUsers.orElse(new ArrayList<String>());
+		
+		testsuiteService.update(suite, assignUsers);
 
 		return "redirect:/user";
 	}
@@ -177,7 +177,7 @@ public class TestsuiteController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@PostMapping(value = "/testsuite/edit/{suiteId}", params = "delete")
 	public String deleteSuite(@PathVariable int suiteId, Authentication loginUser) {
-        testsuiteService.deleteSuite(suiteId, loginUser.getName());
+		testsuiteService.deleteSuite(suiteId, loginUser.getName());
 		
 		return "redirect:/user";
 	}

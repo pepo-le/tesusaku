@@ -31,76 +31,76 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SignupController {
 
-    private final UserComponent userComponent;
+	private final UserComponent userComponent;
 
-    private final UserService userService;
+	private final UserService userService;
 
-    private final ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 
-    /** ユーザー登録画面を表示 */
-    @GetMapping("/signup")
-    public String getSignup(Model model, Locale locale, @ModelAttribute SignupForm form) {
+	/** ユーザー登録画面を表示 */
+	@GetMapping("/signup")
+	public String getSignup(Model model, Locale locale, @ModelAttribute SignupForm form) {
 
-        Map<String, String> roleMap = userComponent.getRoleMap(locale);
-        model.addAttribute("roleMap", roleMap);
+		Map<String, String> roleMap = userComponent.getRoleMap(locale);
+		model.addAttribute("roleMap", roleMap);
 
-        // ユーザー登録画面に遷移
-        return "user/signup";
-    }
+		// ユーザー登録画面に遷移
+		return "user/signup";
+	}
 
-    /** ユーザー登録処理 */
-    @PostMapping("/signup")
-    public String postSignup(Model model, Locale locale,
-            @ModelAttribute @Validated(GroupOrder.class) SignupForm form,
-            BindingResult bindingResult) {
+	/** ユーザー登録処理 */
+	@PostMapping("/signup")
+	public String postSignup(Model model, Locale locale,
+			@ModelAttribute @Validated(GroupOrder.class) SignupForm form,
+			BindingResult bindingResult) {
 
-        // 入力チェック結果
-        if (bindingResult.hasErrors()) {
-            // NG:ユーザー登録画面に戻ります
-            return getSignup(model, locale, form);
-        }
+		// 入力チェック結果
+		if (bindingResult.hasErrors()) {
+			// NG:ユーザー登録画面に戻ります
+			return getSignup(model, locale, form);
+		}
 
-        log.info(form.toString());
+		log.info(form.toString());
 
-        // formをMUserクラスに変換
-        MUser user = modelMapper.map(form, MUser.class);
+		// formをMUserクラスに変換
+		MUser user = modelMapper.map(form, MUser.class);
 
-        // ユーザー登録
-        userService.signup(user);
+		// ユーザー登録
+		userService.signup(user);
 
-        // ログイン画面にリダイレクト
-        return "redirect:/login";
-    }
+		// ログイン画面にリダイレクト
+		return "redirect:/login";
+	}
 
-    /** データベース関連の例外処理 */
-    @ExceptionHandler(DataAccessException.class)
-    public String dataAccessExceptionHandler(DataAccessException e, Model model) {
+	/** データベース関連の例外処理 */
+	@ExceptionHandler(DataAccessException.class)
+	public String dataAccessExceptionHandler(DataAccessException e, Model model) {
 
-        // 空文字をセット
-        model.addAttribute("error", "");
+		// 空文字をセット
+		model.addAttribute("error", "");
 
-        // メッセージをModelに登録
-        model.addAttribute("message", "SignupControllerで例外が発生しました");
+		// メッセージをModelに登録
+		model.addAttribute("message", "SignupControllerで例外が発生しました");
 
-        // HTTPのエラーコード（500）をModelに登録
-        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
+		// HTTPのエラーコード（500）をModelに登録
+		model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
 
-        return "error";
-    }
+		return "error";
+	}
 
-    /** その他の例外処理 */
-    @ExceptionHandler(Exception.class)
-    public String exceptionHandler(Exception e, Model model) {
+	/** その他の例外処理 */
+	@ExceptionHandler(Exception.class)
+	public String exceptionHandler(Exception e, Model model) {
 
-        // 空文字をセット
-        model.addAttribute("error", "");
+		// 空文字をセット
+		model.addAttribute("error", "");
 
-        // メッセージをModelに登録
-        model.addAttribute("message", "SignupControllerで例外が発生しました");
+		// メッセージをModelに登録
+		model.addAttribute("message", "SignupControllerで例外が発生しました");
 
-        // HTTPのエラーコード（500）をModelに登録
-        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
+		// HTTPのエラーコード（500）をModelに登録
+		model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
 
-        return "error";
-    }
+		return "error";
+	}
 }

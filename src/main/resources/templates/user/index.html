@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/layout-user}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-user}">
 <head>
-  <title>ユーザーページ</title>
-  <!-- CSS読込 -->
-  <link rel="stylesheet" th:href="@{/css/user/list.css}">
+	<title>ユーザーページ</title>
+	<!-- CSS読込 -->
+	<link rel="stylesheet" th:href="@{/css/user/list.css}">
 </head>
 <body>
-  <div layout:fragment="content">
-    <div>
-      <h2 class="h2 header border-bottom">お知らせ</h2>
-      <ul class="list-group list-group-flush">
-      	<li class="list-group-item">お知らせはありません</li>
-      </ul>
-    </div>
-    <div class="mt-5">
-      <h2 class="h2 header border-bottom">テストスイート一覧</h2>
-      <ul class="list-group list-group-flush" th:if="${testsuites.size() == 0}">
-      	<li class="list-group-item py-2">テストスイートはありません</li>
-      </ul>
-      <ul class="list-group" th:each="item: ${testsuites}">
-      	<li class="list-group-item py-2">
-      		<a class="align-middle" th:href="@{/testsuite/} + ${item.suiteId}" th:text="${item.suiteName}"></a>      	
-      		<a class="btn btn-primary btn-sm pull-right" th:href="@{/testsuite/edit/} + ${item.suiteId}" th:text="編集"></a>      	
-      	</li>
-      </ul>
-    </div>
-  </div>
+	<div layout:fragment="content">
+		<div>
+			<h2 class="h2 header border-bottom">お知らせ</h2>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">お知らせはありません</li>
+			</ul>
+		</div>
+		<div class="mt-5">
+			<h2 class="h2 header border-bottom">テストスイート一覧</h2>
+			<ul class="list-group list-group-flush" th:if="${testsuites.size() == 0}">
+				<li class="list-group-item py-2">テストスイートはありません</li>
+			</ul>
+			<ul class="list-group" th:each="item: ${testsuites}">
+				<li class="list-group-item py-2">
+					<a class="align-middle" th:href="@{/testsuite/} + ${item.suiteId}" th:text="${item.suiteName}"></a>				
+					<a class="btn btn-primary btn-sm pull-right" th:href="@{/testsuite/edit/} + ${item.suiteId}" th:text="編集"></a>				
+				</li>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
