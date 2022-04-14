@@ -35,6 +35,7 @@
 	font-size: 0.7rem;	
 	background: none;
 	resize: none;
+	overflow: hidden;
 }
 
 .testcase-form__table {

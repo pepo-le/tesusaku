@@ -38,7 +38,7 @@
 					<tr th:object="${testcaseForm}">
 						<td></td>
 						<td><input class="testcase-form__id" type="text" name="caseId" th:value="1" pattern="[0-9]{1,3}" style="ime-mode:disabled;" required /></td>
-						<td><textarea class="testcase-form__textarea" th:field="*{caseName}" maxlength="50"></textarea></td>
+						<td><textarea class="testcase-form__textarea" th:field="*{caseName}" maxlength="200"></textarea></td>
 						<td><textarea class="testcase-form__textarea" th:field="*{condition}" maxlength="1000"></textarea></td>
 						<td><textarea class="testcase-form__textarea" th:field="*{process}" maxlength="2000"></textarea></td>
 						<td><textarea class="testcase-form__textarea" th:field="*{expect}" maxlength="1000"></textarea></td>
@@ -60,7 +60,7 @@
 						<td th:if="${stat.index == 0}"></td>
 						<td th:if="${stat.index > 0}" th:text="－" class="e-delete-btn"></td>
 						<td><input class="testcase-form__id" type="text" name="caseId" th:value="${testcase.caseId}" pattern="[0-9]{1,3}" style="ime-mode:disabled;" required /></td>
-						<td><textarea class="testcase-form__textarea" name="caseName" th:text="${testcase.caseName}" maxlength="50"></textarea></td>
+						<td><textarea class="testcase-form__textarea" name="caseName" th:text="${testcase.caseName}" maxlength="200"></textarea></td>
 						<td><textarea class="testcase-form__textarea" name="condition" th:text="${testcase.condition}" maxlength="1000"></textarea></td>
 						<td><textarea class="testcase-form__textarea" name="process" th:text="${testcase.process}" maxlength="2000"></textarea></td>
 						<td><textarea class="testcase-form__textarea" name="expect" th:text="${testcase.expect}" maxlength="1000"></textarea></td>

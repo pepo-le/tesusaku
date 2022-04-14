@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS t_testsuite (
 CREATE TABLE IF NOT EXISTS t_testcase (
 	suite_id INT ,
 	case_id INT ,
-	case_name VARCHAR(50) ,
+	case_name VARCHAR(200) ,
 	condition VARCHAR(1000) ,
 	process VARCHAR(2000) ,
 	expect VARCHAR(1000) ,
